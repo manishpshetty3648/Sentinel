@@ -1,0 +1,3492 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0A0A0C" />
+<title>Sentinel — Silent Loss Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SENTINEL — APPLE GLASS · RICH EDITION
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+:root{
+  /* DARK */
+  --bg:#0A0A0C;
+  --surface:rgba(255,255,255,0.048);
+  --surface-2:rgba(255,255,255,0.085);
+  --surface-3:rgba(255,255,255,0.13);
+  --surface-solid:#141416;
+  --border:rgba(255,255,255,0.08);
+  --border-hi:rgba(255,255,255,0.16);
+  --text:#F5F5F7;
+  --text-2:#A1A1A6;
+  --text-3:#6E6E73;
+  --text-4:#48484A;
+  --accent:#0A84FF;
+  --accent-2:#BF5AF2;
+  --accent-3:#30D158;
+  --crit:#FF453A;
+  --hi:#FF9F0A;
+  --med:#FFD60A;
+  --lo:#30D158;
+  --ok:#30D158;
+  --pink:#FF375F;
+  --indigo:#5E5CE6;
+  --teal:#64D2FF;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md:0 12px 32px -8px rgba(0,0,0,0.55);
+  --shadow-lg:0 32px 80px -20px rgba(0,0,0,0.75);
+  --divider:rgba(255,255,255,0.06);
+  --code-bg:rgba(255,255,255,0.06);
+  --scrim:rgba(0,0,0,0.6);
+  --ease:cubic-bezier(.25,.1,.25,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.32,.72,0,1);
+}
+
+[data-theme="light"]{
+  --bg:#F5F5F7;
+  --surface:rgba(255,255,255,0.72);
+  --surface-2:rgba(255,255,255,0.88);
+  --surface-3:rgba(255,255,255,0.96);
+  --surface-solid:#FFFFFF;
+  --border:rgba(0,0,0,0.075);
+  --border-hi:rgba(0,0,0,0.14);
+  --text:#1D1D1F;
+  --text-2:#424245;
+  --text-3:#86868B;
+  --text-4:#AEAEB2;
+  --accent:#007AFF;
+  --accent-2:#AF52DE;
+  --accent-3:#34C759;
+  --crit:#FF3B30;
+  --hi:#FF9500;
+  --med:#FFCC00;
+  --lo:#34C759;
+  --ok:#34C759;
+  --pink:#FF2D55;
+  --indigo:#5856D6;
+  --teal:#5AC8FA;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md:0 12px 32px -8px rgba(0,0,0,0.1);
+  --shadow-lg:0 32px 80px -20px rgba(0,0,0,0.18);
+  --divider:rgba(0,0,0,0.05);
+  --code-bg:rgba(0,0,0,0.045);
+  --scrim:rgba(30,30,35,0.4);
+}
+
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Inter','SF Pro Display','Segoe UI',Roboto,sans-serif;
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"ss01","cv01","cv11";
+  overflow-x:hidden;
+  position:relative;
+  min-height:100vh;
+  letter-spacing:-0.005em;
+  transition:background-color .6s var(--ease),color .6s var(--ease);
+}
+
+/* ============================================================
+   ANIMATED AMBIENT BACKGROUND
+   ============================================================ */
+.bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.bg-orb{
+  position:absolute;border-radius:50%;
+  filter:blur(80px);
+  opacity:.55;
+  will-change:transform;
+  transition:opacity .6s var(--ease);
+}
+[data-theme="light"] .bg-orb{opacity:.4}
+
+.orb-a{
+  width:640px;height:640px;top:-200px;left:-160px;
+  background:radial-gradient(circle,rgba(10,132,255,.55),transparent 65%);
+  animation:drift-a 26s ease-in-out infinite;
+}
+.orb-b{
+  width:560px;height:560px;top:-140px;right:-180px;
+  background:radial-gradient(circle,rgba(191,90,242,.5),transparent 65%);
+  animation:drift-b 32s ease-in-out infinite;
+}
+.orb-c{
+  width:720px;height:720px;bottom:-340px;left:30%;
+  background:radial-gradient(circle,rgba(48,209,88,.32),transparent 65%);
+  animation:drift-c 38s ease-in-out infinite;
+}
+.orb-d{
+  width:480px;height:480px;top:38%;right:8%;
+  background:radial-gradient(circle,rgba(255,55,95,.28),transparent 65%);
+  animation:drift-d 30s ease-in-out infinite;
+}
+
+[data-theme="light"] .orb-a{background:radial-gradient(circle,rgba(0,122,255,.35),transparent 65%)}
+[data-theme="light"] .orb-b{background:radial-gradient(circle,rgba(175,82,222,.32),transparent 65%)}
+[data-theme="light"] .orb-c{background:radial-gradient(circle,rgba(52,199,89,.22),transparent 65%)}
+[data-theme="light"] .orb-d{background:radial-gradient(circle,rgba(255,45,85,.2),transparent 65%)}
+
+@keyframes drift-a{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(80px,50px) scale(1.08)}
+  66%{transform:translate(30px,-30px) scale(.96)}
+}
+@keyframes drift-b{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-70px,80px) scale(1.1)}
+}
+@keyframes drift-c{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-90px,-60px) scale(1.06)}
+}
+@keyframes drift-d{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-50px,40px) scale(1.12)}
+}
+
+.bg-mesh{
+  position:absolute;inset:-10%;
+  background-image:
+    radial-gradient(circle at 15% 25%,rgba(10,132,255,.05) 0,transparent 24%),
+    radial-gradient(circle at 82% 12%,rgba(191,90,242,.045) 0,transparent 24%),
+    radial-gradient(circle at 40% 78%,rgba(48,209,88,.04) 0,transparent 24%),
+    radial-gradient(circle at 88% 82%,rgba(255,159,10,.035) 0,transparent 24%);
+  animation:mesh 60s linear infinite;
+  will-change:transform;
+}
+@keyframes mesh{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* ============================================================
+   APP SHELL
+   ============================================================ */
+.app{display:flex;min-height:100vh;position:relative;z-index:1}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  width:240px;flex:none;position:fixed;inset:0 auto 0 0;height:100vh;
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:40;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+}
+.sidebar::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:280px;pointer-events:none;
+  background:radial-gradient(300px 200px at 0% 0%,rgba(10,132,255,.12),transparent 70%);
+  transition:opacity .6s var(--ease);
+}
+.sidebar::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:240px;pointer-events:none;
+  background:radial-gradient(300px 180px at 100% 100%,rgba(191,90,242,.09),transparent 70%);
+}
+
+.brand{
+  padding:22px 20px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--divider);
+  position:relative;z-index:1;
+  transition:border-color .6s var(--ease);
+}
+.logo{
+  width:34px;height:34px;border-radius:10px;flex:none;
+  background:linear-gradient(135deg,#0A84FF 0%,#BF5AF2 50%,#30D158 100%);
+  display:grid;place-items:center;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.14) inset,
+    0 8px 24px -6px rgba(10,132,255,.75),
+    0 2px 6px rgba(0,0,0,.4);
+  position:relative;
+  transition:transform .4s var(--ease-out),box-shadow .4s var(--ease);
+}
+.logo::before{
+  content:'';position:absolute;inset:-4px;border-radius:14px;
+  background:linear-gradient(135deg,#0A84FF,#BF5AF2 50%,#30D158);
+  filter:blur(12px);opacity:.5;z-index:-1;
+  animation:logoPulse 4s ease-in-out infinite;
+}
+@keyframes logoPulse{
+  0%,100%{opacity:.35;transform:scale(1)}
+  50%{opacity:.7;transform:scale(1.06)}
+}
+.logo:hover{
+  transform:scale(1.06) rotate(-3deg);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.18) inset,
+    0 12px 32px -6px rgba(10,132,255,.95),
+    0 4px 12px rgba(0,0,0,.5);
+}
+.logo svg{width:17px;height:17px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+.brand-text h1{
+  font-size:15px;font-weight:700;letter-spacing:-0.025em;line-height:1.1;
+  background:linear-gradient(100deg,var(--text) 30%,var(--text-2) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand-text p{
+  font-size:10.5px;color:var(--text-3);font-weight:500;margin-top:2px;
+  letter-spacing:0.02em;
+}
+
+.nav{
+  padding:14px 12px;flex:1;overflow-y:auto;
+  display:flex;flex-direction:column;gap:1px;
+  position:relative;z-index:1;
+}
+.nav-label{
+  font-size:10px;font-weight:600;color:var(--text-3);
+  letter-spacing:0.06em;text-transform:uppercase;
+  padding:14px 10px 6px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;
+  padding:8px 10px;border-radius:9px;
+  border:none;background:transparent;cursor:pointer;
+  color:var(--text-2);font-size:13.5px;font-weight:500;
+  font-family:inherit;text-align:left;width:100%;
+  transition:background-color .25s var(--ease),
+             color .25s var(--ease),
+             transform .25s var(--ease-out);
+  position:relative;
+  overflow:hidden;
+}
+.nav-item::before{
+  content:'';position:absolute;inset:0;border-radius:9px;
+  background:linear-gradient(90deg,rgba(10,132,255,.14),rgba(191,90,242,.06));
+  opacity:0;transition:opacity .3s var(--ease);
+  pointer-events:none;
+}
+.nav-item:hover{color:var(--text);transform:translateX(2px)}
+.nav-item:hover::before{opacity:.7}
+.nav-item:active{transform:translateX(2px) scale(.98)}
+.nav-item.active{
+  color:var(--text);font-weight:600;
+}
+.nav-item.active::before{opacity:1}
+
+.nav-item .indicator{
+  position:absolute;left:0;top:50%;
+  width:3px;height:0;border-radius:0 3px 3px 0;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  box-shadow:0 0 12px rgba(10,132,255,.8);
+  transform:translateY(-50%);
+  transition:height .4s var(--ease-spring);
+  pointer-events:none;
+}
+.nav-item.active .indicator{height:18px}
+
+.nav-item svg{
+  width:16px;height:16px;flex:none;stroke-width:1.9;
+  transition:transform .35s var(--ease-out);
+  position:relative;z-index:1;
+}
+.nav-item.active svg{
+  transform:scale(1.06);
+  color:var(--accent);
+  filter:drop-shadow(0 0 6px rgba(10,132,255,.6));
+}
+.nav-item span:not(.nav-badge){
+  position:relative;z-index:1;
+}
+
+.nav-badge{
+  margin-left:auto;font-size:10.5px;font-weight:700;
+  background:linear-gradient(135deg,var(--pink),var(--crit));
+  color:#fff;
+  padding:1.5px 7px;border-radius:20px;min-width:20px;text-align:center;
+  font-variant-numeric:tabular-nums;
+  box-shadow:0 2px 10px rgba(255,69,58,.6),inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .35s var(--ease-spring),opacity .35s var(--ease);
+  position:relative;z-index:1;
+}
+.nav-badge.zero{opacity:0;transform:scale(.5)}
+
+.workspace{
+  padding:14px 16px;border-top:1px solid var(--divider);
+  position:relative;z-index:1;
+  transition:border-color .6s var(--ease);
+}
+.workspace-label{
+  font-size:9.5px;font-weight:600;color:var(--text-3);
+  letter-spacing:0.08em;text-transform:uppercase;
+}
+.workspace-name{
+  font-size:12.5px;font-weight:600;margin-top:4px;
+  letter-spacing:-0.01em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.workspace-meta{
+  font-size:11px;color:var(--text-3);margin-top:3px;
+  display:flex;align-items:center;gap:6px;
+}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--ok);flex:none}
+.dot.pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(48,209,88,.6)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(48,209,88,0)}}
+
+/* ---------- MAIN ---------- */
+.main{margin-left:240px;flex:1;min-width:0;display:flex;flex-direction:column}
+
+/* ---------- TOPBAR ---------- */
+.topbar{
+  height:60px;flex:none;
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+  padding:0 24px;
+  position:sticky;top:0;z-index:30;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+}
+.page-title{
+  font-size:15px;font-weight:600;letter-spacing:-0.02em;
+  display:flex;align-items:baseline;gap:8px;
+}
+.page-title .sep{color:var(--text-4);font-weight:400}
+.page-title .sub{color:var(--text-3);font-weight:500;font-size:13.5px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+
+/* Theme switch */
+.theme-switch{
+  display:inline-flex;padding:2px;gap:1px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  position:relative;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+}
+.theme-switch button{
+  position:relative;z-index:1;
+  width:28px;height:26px;
+  display:grid;place-items:center;
+  border:none;background:transparent;cursor:pointer;
+  color:var(--text-3);border-radius:8px;
+  transition:color .3s var(--ease);
+}
+.theme-switch button:hover{color:var(--text-2)}
+.theme-switch button.active{color:var(--text)}
+.theme-switch button svg{width:14px;height:14px;stroke-width:2}
+.theme-switch .slider{
+  position:absolute;top:2px;left:2px;
+  width:28px;height:26px;
+  background:linear-gradient(135deg,rgba(10,132,255,.18),rgba(191,90,242,.14));
+  border-radius:8px;
+  box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,.15);
+  transition:transform .38s var(--ease-spring),background .4s var(--ease);
+  pointer-events:none;
+}
+[data-theme="light"] .theme-switch .slider{transform:translateX(29px)}
+
+/* ---------- BUTTONS ---------- */
+.btn{
+  font-family:inherit;font-size:12.5px;font-weight:500;
+  border-radius:9px;cursor:pointer;
+  padding:7px 14px;color:var(--text);
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  display:inline-flex;align-items:center;gap:6px;
+  transition:background-color .2s var(--ease),
+             border-color .2s var(--ease),
+             transform .18s var(--ease-out),
+             box-shadow .3s var(--ease);
+  letter-spacing:-0.005em;
+  position:relative;
+  overflow:hidden;
+}
+.btn:hover{
+  background:var(--surface-3);
+  border-color:var(--border-hi);
+  transform:translateY(-1px);
+  box-shadow:var(--shadow-md);
+}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn svg{width:13px;height:13px;stroke-width:2}
+.btn-primary{
+  background:linear-gradient(135deg,#0A84FF,#5E5CE6);
+  color:#fff;border-color:transparent;
+  font-weight:600;
+  box-shadow:0 6px 20px -6px rgba(10,132,255,.7),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.btn-primary:hover{
+  background:linear-gradient(135deg,#0A84FF,#5E5CE6);
+  filter:brightness(1.1);
+  box-shadow:0 12px 32px -8px rgba(10,132,255,.9),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.btn-primary::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transform:translateX(-100%);
+  transition:transform .6s var(--ease);
+}
+.btn-primary:hover::after{transform:translateX(100%)}
+
+.btn-danger{background:linear-gradient(135deg,#FF453A,#FF375F);color:#fff;border-color:transparent}
+.btn-icon{
+  width:26px;height:26px;padding:0;display:grid;place-items:center;
+  background:transparent;border:none;color:var(--text-3);
+  border-radius:7px;cursor:pointer;
+  transition:background-color .2s,color .2s,transform .18s;
+}
+.btn-icon:hover{background:rgba(255,69,58,.14);color:var(--crit);transform:scale(1.08)}
+.btn-icon:active{transform:scale(.92)}
+.btn-icon svg{width:14px;height:14px;stroke-width:2}
+
+.ripple{
+  position:absolute;border-radius:50%;transform:scale(0);
+  background:radial-gradient(circle,rgba(255,255,255,.5),transparent 70%);
+  animation:rippleAnim .65s ease-out forwards;pointer-events:none;
+}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+
+/* ============================================================
+   VIEWS
+   ============================================================ */
+.view{display:none;padding:28px 32px 80px;max-width:1240px}
+.view.active{display:block;animation:viewIn .4s var(--ease-out)}
+@keyframes viewIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.section-head h2{font-size:14px;font-weight:600;letter-spacing:-0.015em}
+.section-head .desc{font-size:12.5px;color:var(--text-3);font-weight:400}
+
+/* ============================================================
+   OVERVIEW — HERO
+   ============================================================ */
+.hero{
+  background:
+    linear-gradient(135deg,rgba(255,69,58,.08) 0%,rgba(255,159,10,.05) 40%,rgba(191,90,242,.06) 100%),
+    var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:34px 32px 30px;
+  margin-bottom:18px;
+  position:relative;overflow:hidden;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease),
+             transform .4s var(--ease-out),box-shadow .4s var(--ease);
+  animation:heroIn .7s var(--ease-out) backwards;
+}
+@keyframes heroIn{
+  from{opacity:0;transform:translateY(16px) scale(.995)}
+  to{opacity:1;transform:none}
+}
+.hero:hover{
+  border-color:var(--border-hi);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-lg);
+}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,69,58,.6),rgba(191,90,242,.5),transparent);
+}
+.hero::after{
+  content:'';position:absolute;inset:0;border-radius:20px;
+  background:radial-gradient(600px 200px at 20% 0%,rgba(255,69,58,.14),transparent 70%);
+  pointer-events:none;
+  animation:heroGlow 6s ease-in-out infinite;
+}
+@keyframes heroGlow{
+  0%,100%{opacity:.5}
+  50%{opacity:.9}
+}
+.hero-inner{position:relative;z-index:1}
+.hero-label{
+  font-size:11px;font-weight:700;color:var(--text-3);
+  letter-spacing:0.09em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-label::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,var(--crit),var(--pink));
+  box-shadow:0 0 12px rgba(255,69,58,.9);
+  animation:pulse 2s ease-in-out infinite;
+}
+.hero-value{
+  font-size:56px;font-weight:800;letter-spacing:-0.04em;
+  margin-top:10px;line-height:1.02;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum","ss01";
+  background:linear-gradient(100deg,var(--text) 15%,var(--text-2) 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{
+  font-size:13.5px;color:var(--text-3);margin-top:12px;font-weight:400;
+}
+.hero-sub b{color:var(--text-2);font-weight:600}
+
+/* ============================================================
+   METRICS — colored cards
+   ============================================================ */
+.metrics{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:32px;
+}
+.metric{
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px 20px 18px;
+  position:relative;overflow:hidden;
+  cursor:default;
+  transition:transform .45s var(--ease-out),
+             border-color .3s var(--ease),
+             box-shadow .45s var(--ease),
+             background-color .6s var(--ease);
+  animation:metricIn .65s var(--ease-out) backwards;
+}
+.metric:nth-child(1){animation-delay:.06s}
+.metric:nth-child(2){animation-delay:.12s}
+.metric:nth-child(3){animation-delay:.18s}
+.metric:nth-child(4){animation-delay:.24s}
+@keyframes metricIn{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
+}
+
+.metric::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--accent-grad);
+  opacity:0;
+  transition:opacity .4s var(--ease);
+}
+.metric::after{
+  content:'';position:absolute;top:-40%;right:-40%;
+  width:200px;height:200px;border-radius:50%;
+  background:var(--accent-glow);
+  filter:blur(60px);
+  opacity:0;
+  transition:opacity .5s var(--ease);
+  pointer-events:none;
+}
+.metric:hover{
+  transform:translateY(-4px);
+  border-color:var(--border-hi);
+  box-shadow:var(--shadow-lg);
+}
+.metric:hover::before{opacity:1}
+.metric:hover::after{opacity:.8}
+
+/* Metric color accents */
+.metric.m-blue{
+  --accent-grad:linear-gradient(90deg,transparent,#0A84FF,#64D2FF,transparent);
+  --accent-glow:radial-gradient(circle,rgba(10,132,255,.3),transparent 70%);
+  --accent-color:#0A84FF;
+}
+.metric.m-red{
+  --accent-grad:linear-gradient(90deg,transparent,#FF453A,#FF375F,transparent);
+  --accent-glow:radial-gradient(circle,rgba(255,69,58,.3),transparent 70%);
+  --accent-color:#FF453A;
+}
+.metric.m-purple{
+  --accent-grad:linear-gradient(90deg,transparent,#BF5AF2,#5E5CE6,transparent);
+  --accent-glow:radial-gradient(circle,rgba(191,90,242,.3),transparent 70%);
+  --accent-color:#BF5AF2;
+}
+.metric.m-green{
+  --accent-grad:linear-gradient(90deg,transparent,#30D158,#64D2FF,transparent);
+  --accent-glow:radial-gradient(circle,rgba(48,209,88,.28),transparent 70%);
+  --accent-color:#30D158;
+}
+
+.metric-header{display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+.metric-icon{
+  width:32px;height:32px;border-radius:9px;flex:none;
+  display:grid;place-items:center;
+  background:var(--accent-glow);
+  border:1px solid var(--border);
+  transition:transform .4s var(--ease-out);
+}
+.metric:hover .metric-icon{transform:scale(1.08) rotate(-3deg)}
+.metric-icon svg{width:15px;height:15px;stroke-width:2;color:var(--accent-color)}
+.metric-label{
+  font-size:11.5px;color:var(--text-3);font-weight:600;
+  letter-spacing:0.01em;
+}
+.metric-value{
+  font-size:24px;font-weight:700;letter-spacing:-0.03em;
+  margin-top:12px;font-variant-numeric:tabular-nums;
+  position:relative;z-index:1;
+  transition:color .3s var(--ease);
+}
+.metric-sub{
+  font-size:11.5px;color:var(--text-3);margin-top:4px;
+  position:relative;z-index:1;
+}
+
+/* ============================================================
+   FINDINGS — rows with severity accents
+   ============================================================ */
+.findings-head{
+  display:flex;align-items:center;gap:10px;margin-bottom:12px;
+  animation:sectionIn .6s var(--ease-out) backwards;
+  animation-delay:.3s;
+}
+@keyframes sectionIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.findings-head h3{font-size:14px;font-weight:600;letter-spacing:-0.015em}
+.findings-head .count{
+  font-size:11.5px;color:var(--text-3);
+  padding:2px 9px;border-radius:20px;
+  background:var(--surface-2);
+  font-variant-numeric:tabular-nums;
+  font-weight:500;
+}
+.findings-head .link{
+  margin-left:auto;
+  font-size:12.5px;color:var(--accent);
+  background:none;border:none;cursor:pointer;
+  font-family:inherit;font-weight:600;
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 10px;border-radius:7px;
+  transition:background-color .2s var(--ease),color .2s;
+}
+.findings-head .link:hover{
+  background:var(--surface-2);
+  color:var(--accent-2);
+}
+.findings-head .link svg{width:12px;height:12px;stroke-width:2.4;transition:transform .25s var(--ease-out)}
+.findings-head .link:hover svg{transform:translateX(3px)}
+
+.findings-list{
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+  animation:listIn .7s var(--ease-out) backwards;
+  animation-delay:.35s;
+}
+@keyframes listIn{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:none}
+}
+
+.finding-row{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px 14px 22px;
+  border-bottom:1px solid var(--divider);
+  cursor:pointer;background:transparent;
+  border-left:none;border-right:none;border-top:none;
+  font-family:inherit;text-align:left;width:100%;
+  color:var(--text);font-size:13.5px;
+  transition:background-color .25s var(--ease),
+             padding .3s var(--ease-out);
+  position:relative;
+  overflow:hidden;
+}
+.finding-row::before{
+  content:'';position:absolute;
+  left:0;top:50%;width:3px;height:0;
+  border-radius:0 3px 3px 0;
+  background:var(--sev-color);
+  box-shadow:0 0 14px var(--sev-glow);
+  transform:translateY(-50%);
+  transition:height .35s var(--ease-spring);
+}
+.finding-row:hover::before{height:calc(100% - 16px)}
+.finding-row:hover{
+  background:var(--surface-2);
+  padding-left:26px;
+}
+.finding-row:active{background:var(--surface-3)}
+.finding-row:last-child{border-bottom:none}
+
+.finding-row.crit{--sev-color:var(--crit);--sev-glow:rgba(255,69,58,.8)}
+.finding-row.high{--sev-color:var(--hi);--sev-glow:rgba(255,159,10,.8)}
+.finding-row.medium{--sev-color:var(--med);--sev-glow:rgba(255,214,10,.7)}
+.finding-row.low{--sev-color:var(--lo);--sev-glow:rgba(48,209,88,.7)}
+
+.sev-dot{
+  width:9px;height:9px;border-radius:50%;flex:none;
+  position:relative;
+  transition:transform .3s var(--ease-out);
+}
+.sev-dot.critical{
+  background:radial-gradient(circle at 30% 30%,#FF6B62,var(--crit));
+  box-shadow:0 0 0 3px rgba(255,69,58,.22),0 0 12px rgba(255,69,58,.9);
+}
+.sev-dot.high{
+  background:radial-gradient(circle at 30% 30%,#FFB340,var(--hi));
+  box-shadow:0 0 0 3px rgba(255,159,10,.22),0 0 12px rgba(255,159,10,.85);
+}
+.sev-dot.medium{
+  background:radial-gradient(circle at 30% 30%,#FFE066,var(--med));
+  box-shadow:0 0 0 3px rgba(255,214,10,.22),0 0 12px rgba(255,214,10,.75);
+}
+.sev-dot.low{
+  background:radial-gradient(circle at 30% 30%,#5BE07A,var(--lo));
+  box-shadow:0 0 0 3px rgba(48,209,88,.22),0 0 12px rgba(48,209,88,.8);
+}
+.finding-row:hover .sev-dot{transform:scale(1.2)}
+.sev-dot.critical{animation:critPulse 2s ease-in-out infinite}
+@keyframes critPulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(255,69,58,.22),0 0 12px rgba(255,69,58,.9)}
+  50%{box-shadow:0 0 0 5px rgba(255,69,58,.14),0 0 20px rgba(255,69,58,.7)}
+}
+
+.fr-content{flex:1;min-width:0}
+.fr-cat{
+  font-size:10.5px;color:var(--text-3);font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px;
+}
+.fr-title{
+  font-weight:500;letter-spacing:-0.005em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  transition:color .2s var(--ease);
+}
+.finding-row:hover .fr-title{color:#fff}
+[data-theme="light"] .finding-row:hover .fr-title{color:var(--text)}
+
+.fr-impact{
+  font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;
+  color:var(--text-2);flex:none;
+  padding:3px 11px;border-radius:8px;
+  background:var(--surface-2);
+  transition:transform .3s var(--ease-spring),background-color .2s,box-shadow .3s;
+}
+.finding-row:hover .fr-impact{transform:scale(1.05)}
+.fr-impact.crit{
+  color:var(--crit);
+  background:linear-gradient(135deg,rgba(255,69,58,.16),rgba(255,55,95,.1));
+  box-shadow:0 0 0 1px rgba(255,69,58,.28),0 4px 12px -4px rgba(255,69,58,.4);
+}
+.fr-impact.high{
+  color:var(--hi);
+  background:linear-gradient(135deg,rgba(255,159,10,.16),rgba(255,214,10,.08));
+  box-shadow:0 0 0 1px rgba(255,159,10,.28),0 4px 12px -4px rgba(255,159,10,.4);
+}
+[data-theme="light"] .fr-impact.crit{background:rgba(255,59,48,.1)}
+[data-theme="light"] .fr-impact.high{background:rgba(255,149,0,.1)}
+
+.fr-chevron{
+  width:12px;height:12px;stroke-width:2.4;color:var(--text-4);
+  flex:none;
+  transition:transform .28s var(--ease-out),color .28s;
+}
+.finding-row:hover .fr-chevron{
+  transform:translateX(3px);
+  color:var(--accent);
+}
+
+.empty-state{
+  text-align:center;padding:64px 24px;
+  color:var(--text-3);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+}
+.empty-state svg{width:32px;height:32px;margin-bottom:14px;opacity:.5;stroke-width:1.6;color:var(--accent)}
+.empty-state h4{color:var(--text-2);font-size:14px;font-weight:600;margin-bottom:5px;letter-spacing:-0.015em}
+.empty-state p{font-size:12.5px}
+
+/* Segmented controls */
+.segmented{
+  display:inline-flex;padding:3px;gap:1px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  position:relative;
+  flex-wrap:wrap;
+}
+.segmented button{
+  font-family:inherit;font-size:12px;font-weight:500;
+  padding:6px 13px;
+  border:none;background:transparent;cursor:pointer;
+  color:var(--text-3);border-radius:7px;
+  transition:color .22s var(--ease),background-color .3s var(--ease),transform .18s;
+  letter-spacing:-0.005em;
+  position:relative;z-index:1;
+  display:flex;align-items:center;gap:6px;
+  font-variant-numeric:tabular-nums;
+}
+.segmented button:hover{color:var(--text-2)}
+.segmented button:active{transform:scale(.96)}
+.segmented button.active{
+  color:var(--text);font-weight:600;
+  background:var(--surface-3);
+  box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.segmented button .p-dot{
+  width:6px;height:6px;border-radius:50%;
+  display:inline-block;
+}
+
+/* ============================================================
+   DRAWER
+   ============================================================ */
+.scrim{
+  position:fixed;inset:0;z-index:90;
+  background:var(--scrim);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s var(--ease);
+}
+.scrim.open{opacity:1;pointer-events:auto}
+
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(580px,94vw);z-index:100;
+  background:var(--surface-2);
+  backdrop-filter:blur(50px) saturate(200%);
+  -webkit-backdrop-filter:blur(50px) saturate(200%);
+  border-left:1px solid var(--border);
+  transform:translateX(100%);
+  transition:transform .48s var(--ease-spring),
+             background-color .6s var(--ease),
+             border-color .6s var(--ease);
+  display:flex;flex-direction:column;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+}
+.drawer::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:300px;pointer-events:none;
+  background:radial-gradient(500px 200px at 20% 0%,rgba(10,132,255,.16),transparent 70%);
+}
+.drawer.open{transform:translateX(0)}
+
+.d-head{
+  padding:26px 28px 20px;
+  border-bottom:1px solid var(--divider);
+  flex:none;
+  position:relative;z-index:1;
+  transition:border-color .6s var(--ease);
+}
+.d-head .row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.d-close{
+  margin-left:auto;
+  width:30px;height:30px;border-radius:8px;
+  background:var(--surface-2);border:1px solid var(--border);
+  color:var(--text-3);cursor:pointer;
+  display:grid;place-items:center;
+  transition:background-color .2s,color .2s,transform .3s var(--ease-out);
+}
+.d-close:hover{background:var(--surface-3);color:var(--text);transform:rotate(90deg)}
+.d-close:active{transform:rotate(90deg) scale(.92)}
+.d-close svg{width:13px;height:13px;stroke-width:2.2}
+.d-head h2{
+  font-size:20px;font-weight:700;letter-spacing:-0.03em;line-height:1.25;
+}
+.d-head .meta{
+  font-size:12px;color:var(--text-3);margin-top:6px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font-variant-numeric:tabular-nums;
+}
+.d-head .meta b{color:var(--text-2);font-weight:600}
+.d-head .meta .sep{color:var(--text-4);opacity:.6}
+
+.sev-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10.5px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;
+  padding:5px 10px;border-radius:7px;
+  font-variant-numeric:tabular-nums;
+}
+.sev-chip::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:currentColor;box-shadow:0 0 8px currentColor;
+}
+.sev-chip.critical{color:var(--crit);background:rgba(255,69,58,.14);border:1px solid rgba(255,69,58,.28)}
+.sev-chip.high{color:var(--hi);background:rgba(255,159,10,.14);border:1px solid rgba(255,159,10,.26)}
+.sev-chip.medium{color:#B8A200;background:rgba(255,214,10,.14);border:1px solid rgba(255,214,10,.26)}
+.sev-chip.low{color:var(--lo);background:rgba(48,209,88,.14);border:1px solid rgba(48,209,88,.26)}
+[data-theme="light"] .sev-chip.critical{background:rgba(255,59,48,.1);color:var(--crit)}
+[data-theme="light"] .sev-chip.high{background:rgba(255,149,0,.1);color:var(--hi)}
+[data-theme="light"] .sev-chip.medium{background:rgba(255,204,0,.18);color:#8A7000}
+[data-theme="light"] .sev-chip.low{background:rgba(52,199,89,.1);color:var(--lo)}
+
+.d-body{
+  padding:24px 28px 44px;
+  overflow-y:auto;flex:1;
+  position:relative;z-index:1;
+}
+.d-block{margin-bottom:28px;animation:blockIn .5s var(--ease-out) backwards}
+.d-block:nth-child(1){animation-delay:.05s}
+.d-block:nth-child(2){animation-delay:.1s}
+.d-block:nth-child(3){animation-delay:.15s}
+.d-block:nth-child(4){animation-delay:.2s}
+.d-block:nth-child(5){animation-delay:.25s}
+.d-block:nth-child(6){animation-delay:.3s}
+@keyframes blockIn{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+.d-block:last-child{margin-bottom:0}
+.d-block h4{
+  font-size:11px;color:var(--text-3);font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  margin-bottom:13px;
+  display:flex;align-items:center;gap:10px;
+}
+.d-block h4::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--divider),transparent);
+}
+.d-block p{font-size:13.5px;color:var(--text-2);line-height:1.68}
+.d-block p + p{margin-top:10px}
+.d-block p.lead{
+  font-size:15px;color:var(--text);font-weight:600;
+  letter-spacing:-0.015em;line-height:1.5;
+  margin-bottom:10px;
+}
+
+/* Chain */
+.chain{
+  display:flex;align-items:stretch;overflow-x:auto;
+  padding:6px 0 10px;
+  gap:0;
+}
+.chain-node{
+  flex:none;min-width:135px;
+  padding:13px 15px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:11px;
+  font-size:12px;font-weight:500;line-height:1.35;
+  transition:transform .3s var(--ease-out),border-color .3s,box-shadow .3s;
+  position:relative;
+}
+.chain-node:hover{
+  transform:translateY(-3px);
+  border-color:var(--border-hi);
+  box-shadow:var(--shadow-md);
+}
+.chain-node small{
+  display:block;font-size:9.5px;color:var(--text-3);
+  letter-spacing:0.09em;text-transform:uppercase;
+  font-weight:700;margin-bottom:5px;
+}
+.chain-node .sub{
+  font-size:10.5px;color:var(--text-3);
+  margin-top:6px;font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;
+}
+.chain-node:last-child{
+  background:linear-gradient(135deg,rgba(255,69,58,.14),rgba(255,55,95,.08));
+  border-color:rgba(255,69,58,.3);
+  box-shadow:0 0 20px -8px rgba(255,69,58,.5);
+}
+[data-theme="light"] .chain-node:last-child{
+  background:linear-gradient(135deg,rgba(255,59,48,.08),rgba(255,45,85,.05));
+  border-color:rgba(255,59,48,.24);
+}
+.chain-arrow{
+  flex:none;width:26px;display:grid;place-items:center;
+  color:var(--accent);font-size:13px;
+  animation:arrowPulse 2.4s ease-in-out infinite;
+}
+@keyframes arrowPulse{
+  0%,100%{opacity:.5;transform:translateX(0)}
+  50%{opacity:1;transform:translateX(2px)}
+}
+
+/* Evidence */
+.ev-table{width:100%;border-collapse:collapse;font-size:13px}
+.ev-table tr{border-bottom:1px solid var(--divider)}
+.ev-table tr:last-child{border-bottom:none}
+.ev-table td{
+  padding:11px 0;vertical-align:top;
+  transition:background-color .2s;
+}
+.ev-table td:first-child{color:var(--text-3);width:58%;padding-right:16px}
+.ev-table td:last-child{
+  text-align:right;color:var(--text);font-weight:600;
+  font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  white-space:nowrap;
+}
+.ev-table td:last-child.bad{color:var(--crit)}
+.ev-table td:last-child.good{color:var(--lo)}
+.ev-table tr:hover td{background:var(--surface-2)}
+
+/* Callouts */
+.callout{
+  padding:15px 17px;border-radius:12px;
+  font-size:13px;line-height:1.65;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  transition:background-color .6s var(--ease),border-color .6s var(--ease),transform .3s var(--ease-out);
+  position:relative;
+  overflow:hidden;
+}
+.callout::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--co,var(--accent));
+}
+.callout:hover{transform:translateX(2px)}
+.callout.warn{
+  background:linear-gradient(135deg,rgba(255,159,10,.09),rgba(255,159,10,.03));
+  border-color:rgba(255,159,10,.24);
+  color:var(--text-2);
+  --co:var(--hi);
+}
+.callout.info{
+  background:linear-gradient(135deg,rgba(10,132,255,.08),rgba(10,132,255,.02));
+  border-color:rgba(10,132,255,.22);
+  color:var(--text-2);
+  --co:var(--accent);
+}
+.callout.ok{
+  background:linear-gradient(135deg,rgba(48,209,88,.08),rgba(48,209,88,.02));
+  border-color:rgba(48,209,88,.22);
+  color:var(--text-2);
+  --co:var(--lo);
+}
+[data-theme="light"] .callout.warn{background:linear-gradient(135deg,rgba(255,149,0,.06),rgba(255,149,0,.02))}
+[data-theme="light"] .callout.info{background:linear-gradient(135deg,rgba(0,122,255,.05),rgba(0,122,255,.015))}
+[data-theme="light"] .callout.ok{background:linear-gradient(135deg,rgba(52,199,89,.05),rgba(52,199,89,.015))}
+.callout b{color:var(--text);font-weight:600}
+
+.refs{display:flex;flex-wrap:wrap;gap:7px}
+.ref{
+  font-size:11px;font-weight:500;
+  padding:5px 11px;border-radius:8px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  color:var(--text-3);
+  font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;
+  transition:background-color .2s,color .2s,border-color .2s,transform .2s var(--ease-out);
+}
+.ref:hover{
+  background:var(--surface-3);
+  color:var(--accent);
+  border-color:rgba(10,132,255,.3);
+  transform:translateY(-1px);
+}
+
+/* ============================================================
+   TABLES
+   ============================================================ */
+.table-wrap{
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:20px;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+  animation:listIn .7s var(--ease-out) backwards;
+}
+.table-head{
+  padding:15px 20px;
+  border-bottom:1px solid var(--divider);
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  transition:border-color .6s var(--ease);
+}
+.table-head h3{font-size:13.5px;font-weight:600;letter-spacing:-0.015em}
+.table-head .count{
+  margin-left:auto;font-size:11px;color:var(--text-3);
+  padding:3px 10px;border-radius:20px;
+  background:var(--surface-2);
+  font-variant-numeric:tabular-nums;font-weight:500;
+}
+table.data{width:100%;border-collapse:collapse;font-size:12.5px}
+table.data th{
+  text-align:left;padding:11px 18px;
+  font-size:10.5px;font-weight:700;
+  color:var(--text-3);
+  letter-spacing:0.07em;text-transform:uppercase;
+  border-bottom:1px solid var(--divider);
+  white-space:nowrap;
+  transition:border-color .6s var(--ease);
+}
+table.data td{
+  padding:12px 18px;
+  border-bottom:1px solid var(--divider);
+  color:var(--text-2);
+  white-space:nowrap;
+  transition:background-color .2s var(--ease),border-color .6s var(--ease),color .2s;
+  font-variant-numeric:tabular-nums;
+}
+table.data tr:last-child td{border-bottom:none}
+table.data tbody tr{transition:background-color .2s var(--ease)}
+table.data tbody tr:hover{
+  background:linear-gradient(90deg,rgba(10,132,255,.06),transparent 70%);
+}
+table.data tbody tr:hover td{color:var(--text)}
+table.data td.num{text-align:right;font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace;font-size:12px}
+table.data td.actions{text-align:right;width:40px}
+table.data td strong{color:var(--text);font-weight:600}
+table.data td .mono{color:var(--text-3);font-size:11px;font-family:'JetBrains Mono',monospace}
+
+.tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10.5px;font-weight:700;
+  padding:3px 9px;border-radius:7px;
+  letter-spacing:0.01em;
+}
+.tag.red{background:rgba(255,69,58,.14);color:var(--crit);border:1px solid rgba(255,69,58,.22)}
+.tag.amber{background:rgba(255,159,10,.14);color:var(--hi);border:1px solid rgba(255,159,10,.22)}
+.tag.green{background:rgba(48,209,88,.14);color:var(--lo);border:1px solid rgba(48,209,88,.22)}
+.tag.blue{background:rgba(10,132,255,.14);color:var(--accent);border:1px solid rgba(10,132,255,.22)}
+.tag.grey{background:var(--surface-2);color:var(--text-3);border:1px solid var(--border)}
+[data-theme="light"] .tag.red{background:rgba(255,59,48,.09);color:var(--crit)}
+[data-theme="light"] .tag.amber{background:rgba(255,149,0,.09);color:var(--hi)}
+[data-theme="light"] .tag.green{background:rgba(52,199,89,.09);color:var(--lo)}
+[data-theme="light"] .tag.blue{background:rgba(0,122,255,.07);color:var(--accent)}
+.tag i{width:5px;height:5px;border-radius:50%;background:currentColor;display:block;box-shadow:0 0 6px currentColor}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.form-card{
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:22px 24px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+  animation:listIn .7s var(--ease-out) backwards;
+}
+.form-card::before{
+  content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(10,132,255,.5),rgba(191,90,242,.4),transparent);
+}
+.form-card h3{font-size:13.5px;font-weight:600;letter-spacing:-0.015em;margin-bottom:4px}
+.form-card .cd{font-size:12px;color:var(--text-3);margin-bottom:16px}
+.form-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;align-items:end;
+}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{
+  font-size:11px;font-weight:700;color:var(--text-3);
+  letter-spacing:0.02em;
+}
+.field input,.field select{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 12px;
+  color:var(--text);font-size:13px;
+  font-family:inherit;outline:none;
+  transition:background-color .2s var(--ease),
+             border-color .2s var(--ease),
+             box-shadow .25s var(--ease),
+             transform .2s var(--ease-out);
+  font-variant-numeric:tabular-nums;
+  width:100%;
+}
+.field input:focus,.field select:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(10,132,255,.18),0 4px 16px -6px rgba(10,132,255,.4);
+  background:var(--surface-3);
+  transform:translateY(-1px);
+}
+.field input::placeholder{color:var(--text-4)}
+.field select option{background:var(--surface-solid);color:var(--text)}
+
+/* ============================================================
+   ASK SENTINEL
+   ============================================================ */
+.ask-wrap{max-width:860px}
+.chat{
+  display:flex;flex-direction:column;gap:16px;
+  padding:22px;
+  min-height:340px;max-height:58vh;overflow-y:auto;
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:16px;
+  margin-bottom:14px;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+  animation:listIn .7s var(--ease-out) backwards;
+}
+.msg{display:flex;gap:11px;animation:msgIn .4s var(--ease-out)}
+@keyframes msgIn{
+  from{opacity:0;transform:translateY(8px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+.msg.user{flex-direction:row-reverse}
+.avatar{
+  width:30px;height:30px;border-radius:9px;flex:none;
+  display:grid;place-items:center;
+  font-size:11.5px;font-weight:700;
+  letter-spacing:-0.01em;
+  transition:transform .3s var(--ease-out);
+}
+.msg:hover .avatar{transform:scale(1.06)}
+.msg.ai .avatar{
+  background:linear-gradient(135deg,#0A84FF 0%,#5E5CE6 50%,#BF5AF2 100%);
+  color:#fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.3),
+    0 6px 20px -6px rgba(10,132,255,.7);
+}
+.msg.user .avatar{
+  background:linear-gradient(135deg,rgba(48,209,88,.9),rgba(48,209,88,.7));
+  color:#fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    0 6px 20px -8px rgba(48,209,88,.6);
+}
+.bubble{
+  padding:13px 17px;
+  border-radius:14px;
+  font-size:13.5px;line-height:1.65;
+  max-width:calc(100% - 46px);
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  color:var(--text-2);
+  transition:background-color .6s var(--ease),border-color .6s var(--ease),transform .3s var(--ease-out);
+}
+.msg:hover .bubble{transform:translateY(-1px)}
+.msg.user .bubble{
+  background:linear-gradient(135deg,#0A84FF,#5E5CE6);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 6px 20px -8px rgba(10,132,255,.6);
+}
+.bubble h5{
+  font-size:13.5px;font-weight:700;color:var(--text);
+  margin-bottom:8px;letter-spacing:-0.015em;
+}
+.msg.user .bubble h5{color:#fff}
+.bubble ul{margin:6px 0 0 18px}
+.bubble li{margin-bottom:5px}
+.bubble li::marker{color:var(--text-4)}
+.msg.user .bubble li::marker{color:rgba(255,255,255,.5)}
+.bubble .hl{
+  color:var(--accent);font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;font-size:12.5px;
+}
+.msg.user .bubble .hl{color:#fff}
+.bubble .money{
+  color:var(--crit);font-weight:700;
+  font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;
+}
+.msg.user .bubble .money{color:#fff}
+.bubble b{color:var(--text);font-weight:600}
+.msg.user .bubble b{color:#fff}
+.bubble i{color:var(--text-3);font-style:normal}
+.msg.user .bubble i{color:rgba(255,255,255,.8)}
+.bubble code{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--code-bg);
+  color:var(--accent);
+  padding:2px 7px;border-radius:6px;font-size:12px;
+}
+.bubble .tag{margin-right:6px;vertical-align:middle}
+.bubble > div{margin-bottom:8px}
+.bubble > div:last-child{margin-bottom:0}
+
+.ask-input{display:flex;gap:8px}
+.ask-input input{
+  flex:1;padding:13px 16px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  color:var(--text);font-size:13.5px;
+  font-family:inherit;outline:none;
+  transition:border-color .2s var(--ease),
+             box-shadow .25s var(--ease),
+             background-color .2s,
+             transform .2s var(--ease-out);
+}
+.ask-input input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(10,132,255,.18),0 4px 20px -8px rgba(10,132,255,.4);
+  transform:translateY(-1px);
+}
+.ask-input .btn{height:44px;padding:0 22px}
+.ask-input .btn-primary{font-weight:600}
+
+.suggestions{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.sugg{
+  font-family:inherit;font-size:12px;font-weight:500;
+  padding:8px 14px;border-radius:10px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  color:var(--text-3);cursor:pointer;
+  transition:background-color .22s var(--ease),
+             color .22s var(--ease),
+             border-color .22s var(--ease),
+             transform .25s var(--ease-out),
+             box-shadow .3s var(--ease);
+}
+.sugg:hover{
+  background:linear-gradient(135deg,rgba(10,132,255,.14),rgba(191,90,242,.08));
+  color:var(--text);
+  border-color:rgba(10,132,255,.35);
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px -8px rgba(10,132,255,.5);
+}
+.sugg:active{transform:translateY(0) scale(.97)}
+
+.typing{display:inline-flex;gap:4px;align-items:center;height:10px;padding:2px 0}
+.typing i{
+  width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  animation:typing 1.3s ease-in-out infinite;
+  box-shadow:0 0 8px rgba(10,132,255,.6);
+}
+.typing i:nth-child(2){animation-delay:.18s}
+.typing i:nth-child(3){animation-delay:.36s}
+@keyframes typing{
+  0%,60%,100%{opacity:.35;transform:translateY(0) scale(.9)}
+  30%{opacity:1;transform:translateY(-3px) scale(1.1)}
+}
+
+/* ============================================================
+   INVESTIGATE
+   ============================================================ */
+.card{
+  background:var(--surface);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:24px 26px;
+  margin-bottom:18px;
+  position:relative;
+  overflow:hidden;
+  transition:background-color .6s var(--ease),border-color .6s var(--ease),
+             transform .4s var(--ease-out),box-shadow .4s var(--ease);
+  animation:listIn .7s var(--ease-out) backwards;
+}
+.card:hover{
+  border-color:var(--border-hi);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-md);
+}
+.card h3{font-size:13.5px;font-weight:600;letter-spacing:-0.015em;margin-bottom:4px}
+.card .cd{font-size:12px;color:var(--text-3);margin-bottom:20px}
+
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--text-3);margin-top:14px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:3px;display:block;flex:none}
+
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.bar-row .name{flex:1;font-size:12.5px;color:var(--text-2);font-weight:500}
+.bar-row .bar{
+  width:110px;height:6px;border-radius:6px;
+  background:var(--surface-2);
+  overflow:hidden;
+  position:relative;
+}
+.bar-row .bar::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);
+  transform:translateX(-100%);
+  animation:barShimmer 3s ease-in-out infinite;
+}
+@keyframes barShimmer{
+  0%{transform:translateX(-100%)}
+  50%,100%{transform:translateX(100%)}
+}
+.bar-row .bar i{
+  display:block;height:100%;border-radius:6px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2));
+  transition:width .9s var(--ease-out);
+  box-shadow:0 0 12px rgba(10,132,255,.5);
+}
+.bar-row .bar i.warn{
+  background:linear-gradient(90deg,var(--hi),var(--med));
+  box-shadow:0 0 12px rgba(255,159,10,.5);
+}
+.bar-row .bar i.crit{
+  background:linear-gradient(90deg,var(--crit),var(--pink));
+  box-shadow:0 0 12px rgba(255,69,58,.5);
+}
+.bar-row .val{
+  font-size:11px;color:var(--text-3);
+  min-width:60px;text-align:right;
+  font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+.toasts{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  display:flex;flex-direction:column;gap:9px;
+  pointer-events:none;
+}
+.toast{
+  background:var(--surface-2);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px 16px;
+  font-size:13px;font-weight:500;
+  box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;gap:11px;
+  max-width:400px;pointer-events:auto;
+  color:var(--text);
+  animation:toastIn .4s var(--ease-spring);
+  transition:background-color .6s var(--ease),border-color .6s var(--ease);
+  position:relative;
+  overflow:hidden;
+}
+.toast::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+}
+@keyframes toastIn{
+  from{opacity:0;transform:translateY(12px) scale(.95)}
+  to{opacity:1;transform:none}
+}
+.toast .ic{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--ok);flex:none;
+  box-shadow:0 0 10px var(--ok);
+}
+.toast.undo .ic{background:var(--hi);box-shadow:0 0 10px var(--hi)}
+.toast.undo::before{background:linear-gradient(180deg,var(--hi),var(--med))}
+.toast .undo-btn{
+  margin-left:auto;
+  font-family:inherit;font-size:12px;font-weight:600;
+  padding:5px 11px;border-radius:7px;
+  background:linear-gradient(135deg,#0A84FF,#5E5CE6);color:#fff;
+  border:none;cursor:pointer;
+  transition:filter .2s,transform .18s;
+  box-shadow:0 4px 12px -4px rgba(10,132,255,.6);
+}
+.toast .undo-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.toast .undo-btn:active{transform:translateY(0) scale(.96)}
+
+/* ============================================================
+   SCAN OVERLAY
+   ============================================================ */
+.scan-overlay{
+  position:fixed;inset:0;z-index:200;
+  background:var(--scrim);
+  backdrop-filter:blur(24px) saturate(140%);
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  display:none;place-items:center;
+  transition:background-color .6s var(--ease);
+}
+.scan-overlay.on{display:grid;animation:viewIn .35s var(--ease-out)}
+.scan-box{text-align:center;width:min(400px,88vw)}
+.scan-ring{
+  width:64px;height:64px;
+  margin:0 auto 24px;
+  position:relative;
+}
+.scan-ring div{
+  position:absolute;inset:0;border-radius:50%;
+  border:2.5px solid transparent;
+}
+.scan-ring div:nth-child(1){
+  border-top-color:var(--accent);
+  animation:spin .9s linear infinite;
+  filter:drop-shadow(0 0 8px var(--accent));
+}
+.scan-ring div:nth-child(2){
+  inset:9px;
+  border-right-color:var(--accent-2);
+  animation:spin 1.4s linear infinite reverse;
+  filter:drop-shadow(0 0 8px var(--accent-2));
+}
+.scan-ring div:nth-child(3){
+  inset:18px;
+  border-bottom-color:var(--lo);
+  animation:spin 2s linear infinite;
+  filter:drop-shadow(0 0 8px var(--lo));
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.scan-box h3{
+  font-size:16px;font-weight:700;letter-spacing:-0.02em;
+  margin-bottom:6px;
+}
+.scan-status{
+  font-size:12.5px;color:var(--text-3);
+  height:20px;
+  font-variant-numeric:tabular-nums;
+  font-family:'JetBrains Mono',monospace;
+}
+.bar{
+  height:3px;border-radius:3px;
+  background:var(--surface-2);
+  overflow:hidden;
+  margin-top:22px;
+}
+.bar i{
+  display:block;height:100%;width:0;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--lo));
+  transition:width .3s var(--ease);
+  box-shadow:0 0 12px rgba(10,132,255,.7);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1100px){
+  .metrics{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .42s var(--ease-spring)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .view{padding:20px 18px 60px}
+  .hero{padding:26px 24px}
+  .hero-value{font-size:42px}
+  .page-title .sub{display:none}
+}
+@media(max-width:600px){
+  .metrics{grid-template-columns:1fr}
+  .segmented{overflow-x:auto;flex-wrap:nowrap;max-width:100%}
+  .finding-row{padding:12px 14px 12px 18px}
+  .fr-title{font-size:13px}
+  .hero-value{font-size:36px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="bg-orb orb-c"></div>
+  <div class="bg-orb orb-d"></div>
+  <div class="bg-mesh"></div>
+</div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L3 6v6c0 5 3.8 9.4 9 10 5.2-.6 9-5 9-10V6l-9-4z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Sentinel</h1>
+        <p>Silent Loss Intel</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Intelligence</div>
+      <button class="nav-item active" data-view="overview">
+        <span class="indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Overview</span>
+      </button>
+      <button class="nav-item" data-view="findings">
+        <span class="indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+        <span>Findings</span>
+        <span class="nav-badge" id="navCount">0</span>
+      </button>
+      <button class="nav-item" data-view="investigate">
+        <span class="indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <span>Investigate</span>
+      </button>
+      <button class="nav-item" data-view="ask">
+        <span class="indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span>Ask Sentinel</span>
+      </button>
+
+      <div class="nav-label">Data</div>
+      <button class="nav-item" data-view="data">
+        <span class="indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg>
+        <span>Data Sources</span>
+      </button>
+    </nav>
+
+    <div class="workspace">
+      <div class="workspace-label">Workspace</div>
+      <div class="workspace-name">Nova Electronics &amp; Accessories</div>
+      <div class="workspace-meta"><span class="dot pulse"></span><span id="bizMeta">180 days · 10 SKUs</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="page-title" id="pageTitle">
+        Loss Intelligence <span class="sep">·</span> <span class="sub">Overview</span>
+      </div>
+      <div class="topbar-right">
+        <div class="theme-switch" role="group" aria-label="Theme">
+          <div class="slider" id="themeSlider"></div>
+          <button data-theme-btn="dark" aria-label="Dark mode" class="active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          </button>
+          <button data-theme-btn="light" aria-label="Light mode">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          </button>
+        </div>
+        <button class="btn" id="rescanBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 11-2.6-6.4"/><path d="M21 3v6h-6"/></svg>
+          Rescan
+        </button>
+      </div>
+    </header>
+
+    <section class="view active" id="view-overview">
+      <div class="hero">
+        <div class="hero-inner">
+          <div class="hero-label">Total Silent Loss Exposure</div>
+          <div class="hero-value" id="heroValue">₹0</div>
+          <div class="hero-sub" id="heroSub"></div>
+        </div>
+      </div>
+
+      <div class="metrics" id="metricsRow"></div>
+
+      <div class="findings-head">
+        <h3>Recent Findings</h3>
+        <span class="count" id="overviewCount">0</span>
+        <button class="link" data-goto="findings">
+          View all
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="findings-list" id="feedOverview"></div>
+    </section>
+
+    <section class="view" id="view-findings">
+      <div class="section-head">
+        <h2>All Findings</h2>
+        <div class="desc" id="findingsCount"></div>
+      </div>
+      <div class="segmented" id="filterSeg" role="group"></div>
+      <div style="height:18px"></div>
+      <div class="findings-list" id="feedAll"></div>
+    </section>
+
+    <section class="view" id="view-investigate">
+      <div class="section-head">
+        <h2>Investigation Workspace</h2>
+        <div class="desc">Underlying evidence behind every flagged finding</div>
+      </div>
+      <div id="investigate"></div>
+    </section>
+
+    <section class="view" id="view-ask">
+      <div class="section-head">
+        <h2>Ask Sentinel</h2>
+        <div class="desc">A conversational assistant — ask about your data, or just chat</div>
+      </div>
+      <div class="ask-wrap">
+        <div class="chat" id="chat"></div>
+        <div class="ask-input">
+          <input id="askInput" placeholder="Ask anything…" autocomplete="off" />
+          <button class="btn btn-primary" id="askBtn">Send</button>
+        </div>
+        <div class="suggestions" id="suggestions"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-data">
+      <div class="section-head">
+        <h2>Data Sources</h2>
+        <div class="desc">Add or remove records — Sentinel re-runs detection instantly</div>
+      </div>
+      <div class="segmented" id="dataSeg" role="group"></div>
+      <div style="height:18px"></div>
+      <div id="dataPane"></div>
+    </section>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <div class="d-head">
+    <div class="row">
+      <span class="sev-chip" id="dSev">HIGH</span>
+      <button class="d-close" id="dClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <h2 id="dTitle"></h2>
+    <div class="meta" id="dMeta"></div>
+  </div>
+  <div class="d-body" id="dBody"></div>
+</aside>
+
+<div class="scan-overlay" id="scanOverlay">
+  <div class="scan-box">
+    <div class="scan-ring"><div></div><div></div><div></div></div>
+    <h3 id="scanTitle">Running loss detection</h3>
+    <div class="scan-status" id="scanStatus">Initialising…</div>
+    <div class="bar"><i id="scanBar"></i></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
+
+<script>
+'use strict';
+/* ==========================================================================
+   SENTINEL — Apple Glass · Rich Edition
+   ========================================================================== */
+
+/* ---------- THEME ---------- */
+(function initTheme(){
+  const saved = localStorage.getItem('sentinel-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  updateThemeButtons(saved);
+})();
+
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('sentinel-theme', t);
+  updateThemeButtons(t);
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', t === 'dark' ? '#0A0A0C' : '#F5F5F7');
+}
+function updateThemeButtons(t){
+  document.querySelectorAll('[data-theme-btn]').forEach(b => {
+    b.classList.toggle('active', b.dataset.themeBtn === t);
+  });
+}
+document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+  btn.onclick = () => setTheme(btn.dataset.themeBtn);
+});
+
+/* ---------- HELPERS ---------- */
+const DAYS = 180;
+const TODAY = new Date();
+const START = new Date(TODAY.getTime() - (DAYS - 1) * 86400000);
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const dstr = d => d.getDate() + ' ' + MON[d.getMonth()];
+const addDays = (d, n) => new Date(d.getTime() + n * 86400000);
+const inr = n => '₹' + Math.round(n).toLocaleString('en-IN');
+const inrShort = n => {
+  n = Math.round(n);
+  if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+  if (n >= 100000)   return '₹' + (n/100000).toFixed(2) + ' L';
+  if (n >= 1000)     return '₹' + (n/1000).toFixed(1) + 'K';
+  return '₹' + n;
+};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = n => (n * 100).toFixed(1) + '%';
+const uid = pre => pre + Math.random().toString(36).slice(2, 8).toUpperCase();
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296}}
+const clone = o => JSON.parse(JSON.stringify(o));
+const SEV_RANK = {critical:4, high:3, medium:2, low:1};
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+/* ---------- SEED ---------- */
+const SUPPLIER_SEED = [
+  { id:'S1', name:'TechLink Distributors', baseLead:3, lateBase:0.12, lateSlope:0.56, city:'Chennai' },
+  { id:'S2', name:'Global Components',    baseLead:5, lateBase:0.10, lateSlope:0.05, city:'Bengaluru' },
+  { id:'S3', name:'Prime Electronics',    baseLead:4, lateBase:0.15, lateSlope:0.07, city:'Mumbai' },
+];
+const PRODUCT_SEED = [
+  { id:'P1',  name:'Wireless Mouse',      cat:'Peripherals', cost:320,  price:649,  demand:2.9,  initStock:100, reorder:17, orderQty:60,  supplier:'S1', retRate:0.032, variants:['Black','White'] },
+  { id:'P2',  name:'Mechanical Keyboard', cat:'Peripherals', cost:1450, price:2799, demand:0.40, initStock:120, reorder:6,  orderQty:24,  supplier:'S1', retRate:0.038, variants:['Blue Switch','Red Switch'] },
+  { id:'P3',  name:'USB-C Cable (1m)',    cat:'Cables',      cost:75,   price:249,  demand:15.5, initStock:500, reorder:55, orderQty:300, supplier:'S1', retRate:0.048, variants:['1m','2m'] },
+  { id:'P4',  name:'HDMI Cable (2m)',     cat:'Cables',      cost:110,  price:349,  demand:0.22, initStock:300, reorder:4,  orderQty:20,  supplier:'S2', retRate:0.030, variants:['2m','3m'] },
+  { id:'P5',  name:'Bluetooth Speaker',   cat:'Audio',       cost:890,  price:1799, demand:0.85, initStock:60,  reorder:6,  orderQty:24,  supplier:'S2', retRate:0.042, variants:['Black','Blue'] },
+  { id:'P6',  name:'Laptop Stand',        cat:'Accessories', cost:640,  price:1299, demand:1.10, initStock:40,  reorder:8,  orderQty:28,  supplier:'S3', retRate:0.034, variants:['Aluminium','Plastic'] },
+  { id:'P7',  name:'HD Webcam 1080p',     cat:'Peripherals', cost:1150, price:2299, demand:0.95, initStock:35,  reorder:7,  orderQty:24,  supplier:'S3', retRate:0.036, variants:['1080p','720p'] },
+  { id:'P8',  name:'Power Bank',          cat:'Power',       cost:980,  price:1899, demand:1.60, initStock:80,  reorder:20, orderQty:70,  supplier:'S2', retRate:0.210, variants:['10000 mAh','20000 mAh'] },
+  { id:'P9',  name:'Mouse Pad XL',        cat:'Accessories', cost:90,   price:299,  demand:0.35, initStock:150, reorder:3,  orderQty:12,  supplier:'S3', retRate:0.028, variants:['Black','RGB'] },
+  { id:'P10', name:'USB Hub 7-Port',      cat:'Accessories', cost:520,  price:1199, demand:1.30, initStock:45,  reorder:8,  orderQty:30,  supplier:'S1', retRate:0.040, variants:['USB-A','USB-C'] },
+];
+const RETURN_REASONS = ['Damaged in transit','Not as described','Changed mind','Defective on arrival','Wrong item shipped'];
+const CUSTOMER_SEED = [
+  { name:'Metro Retail Chain',    chronic:34, jitter:12 },
+  { name:'Bright Office Supplies',chronic:4,  jitter:4  },
+  { name:'Campus Bookstore',      chronic:3,  jitter:3  },
+  { name:'Sharma Enterprises',    chronic:28, jitter:9  },
+  { name:'Orbit Tech Solutions',  chronic:6,  jitter:5  },
+  { name:'Sunrise Stationers',    chronic:7,  jitter:6  },
+];
+
+const DB = { suppliers: [], products: [], receivables: [], meta: { poSeq: 1000, invSeq: 1000 } };
+
+function buildDataset(){
+  const rand = mulberry32(88172645);
+  DB.suppliers = SUPPLIER_SEED.map(s => ({...s}));
+  DB.products = PRODUCT_SEED.map(s => ({ ...s, stock:s.initStock, ledger:[], sales:[], pos:[], pending:null, returns:[] }));
+
+  for (let d = 0; d < DAYS; d++){
+    const date = addDays(START, d), dow = date.getDay();
+    for (const p of DB.products){
+      const open = p.stock;
+      let received = 0;
+      if (p.pending && p.pending.arriveDay <= d){
+        received = p.pending.qty; p.stock += received;
+        const po = p.pending.po;
+        po.receivedDay = d; po.actualDays = d - po.orderDay; po.status = 'received';
+        p.pending = null;
+      }
+      let demand = Math.max(0, Math.round(p.demand * (0.40 + rand()*1.20)));
+      if (dow === 0 || dow === 6) demand = Math.round(demand * 1.28);
+      const sold = Math.min(p.stock, demand);
+      const lost = demand - sold;
+      p.stock -= sold;
+      p.ledger.push({ day:d, date, open, received, demand, sold, lost, close:p.stock });
+      if (sold > 0) p.sales.push({ id:uid('SL'), day:d, date, qty:sold });
+      if (!p.pending && p.stock <= p.reorder){
+        const sup = DB.suppliers.find(s => s.id === p.supplier);
+        const t = d / (DAYS - 1);
+        const lateProb = sup.lateBase + sup.lateSlope * t;
+        let extra = 0;
+        if (rand() < lateProb) extra = 1 + Math.floor(rand() * 5);
+        const cost = p.supplier === 'S3' ? p.cost * (0.915 + 0.00092 * d) : p.cost;
+        const po = {
+          id:'PO-' + (++DB.meta.poSeq), productId:p.id, productName:p.name,
+          supplierId:sup.id, supplierName:sup.name,
+          orderDay:d, orderDate:date, expectedDays:sup.baseLead, actualDays:null,
+          qty:p.orderQty, unitCost:Math.round(cost), receivedDay:null, status:'in-transit'
+        };
+        p.pos.push(po);
+        p.pending = { qty:p.orderQty, arriveDay:d + sup.baseLead + extra, po };
+      }
+    }
+  }
+  for (const p of DB.products){
+    if (!p.sales.length) continue;
+    const totalSold = p.sales.reduce((a,s) => a + s.qty, 0);
+    const n = Math.round(totalSold * p.retRate);
+    for (let i = 0; i < n; i++){
+      const s = p.sales[Math.floor(rand() * p.sales.length)];
+      let reason, variant;
+      if (p.id === 'P8'){
+        if (rand() < 0.72){ reason = 'Battery drains faster than expected'; variant = '20000 mAh'; }
+        else { reason = RETURN_REASONS[Math.floor(rand()*RETURN_REASONS.length)]; variant = rand() < 0.5 ? '10000 mAh' : '20000 mAh'; }
+      } else {
+        reason = RETURN_REASONS[Math.floor(rand()*RETURN_REASONS.length)];
+        variant = p.variants[Math.floor(rand()*p.variants.length)];
+      }
+      p.returns.push({ id:uid('RT'), day:s.day, date:s.date, productId:p.id, productName:p.name, qty:1, reason, variant, refund:p.price });
+    }
+  }
+  DB.receivables = [];
+  for (let i = 0; i < 26; i++){
+    const cust = CUSTOMER_SEED[Math.floor(rand()*CUSTOMER_SEED.length)];
+    const issueDay = Math.floor(rand() * 130);
+    const dueDay = issueDay + 30;
+    const amount = Math.round((12000 + rand()*90000) / 100) * 100;
+    const paid = rand() < 0.74;
+    let paidDay = null, daysLate = 0;
+    if (paid){
+      daysLate = Math.max(0, Math.round(cust.chronic + (rand()-0.4) * cust.jitter));
+      paidDay = dueDay + daysLate;
+      if (paidDay > DAYS - 1) paidDay = null;
+    }
+    DB.receivables.push({
+      id:'INV-' + (++DB.meta.invSeq), customer:cust.name, amount,
+      issueDay, issueDate:addDays(START, issueDay),
+      dueDay, dueDate:addDays(START, dueDay),
+      paidDay, daysLate, status: paidDay === null ? 'pending' : 'paid', chronicBase:cust.chronic
+    });
+  }
+}
+
+function productMetrics(p){
+  const last30 = p.sales.filter(s => s.day >= DAYS - 30).reduce((a,s) => a + s.qty, 0);
+  const last90 = p.sales.filter(s => s.day >= DAYS - 90).reduce((a,s) => a + s.qty, 0);
+  const totalSold = p.sales.reduce((a,s) => a + s.qty, 0);
+  const rate30 = last30 / 30;
+  const coverDays = rate30 > 0 ? p.stock / rate30 : (p.stock > 0 ? Infinity : 0);
+  const stockValue = p.stock * p.cost;
+  const lastSaleDay = p.sales.length ? Math.max(...p.sales.map(s => s.day)) : -1;
+  const daysSinceSale = lastSaleDay < 0 ? DAYS : (DAYS - 1 - lastSaleDay);
+  const stockoutDays = p.ledger.filter(l => l.lost > 0).length;
+  const stockoutDays60 = p.ledger.filter(l => l.lost > 0 && l.day >= DAYS - 60).length;
+  const lostUnits = p.ledger.reduce((a,l) => a + l.lost, 0);
+  const lostUnits60 = p.ledger.filter(l => l.day >= DAYS - 60).reduce((a,l) => a + l.lost, 0);
+  const lostRevenue = lostUnits * p.price;
+  const returns = p.returns.length;
+  const returnRate = totalSold > 0 ? returns / totalSold : 0;
+  const pos = p.pos.filter(po => po.actualDays !== null);
+  const posLate = pos.filter(po => po.actualDays > po.expectedDays);
+  return { last30, last90, totalSold, rate30, coverDays, stockValue, lastSaleDay, daysSinceSale,
+           stockoutDays, stockoutDays60, lostUnits, lostUnits60, lostRevenue, returns, returnRate, pos, posLate };
+}
+
+function supplierMetrics(s){
+  const pos = [];
+  DB.products.filter(p => p.supplier === s.id).forEach(p => pos.push(...p.pos));
+  const done = pos.filter(po => po.actualDays !== null).sort((a,b) => a.orderDay - b.orderDay);
+  const recent = done.slice(-6);
+  const recentLate = recent.filter(po => po.actualDays > po.expectedDays);
+  const avgDelay = done.length ? done.reduce((a,po) => a + (po.actualDays - po.expectedDays), 0) / done.length : 0;
+  const half = Math.floor(done.length / 2);
+  const earlyAvg = half ? done.slice(0, half).reduce((a,po) => a + (po.actualDays - po.expectedDays), 0) / half : 0;
+  const lateAvg  = half ? done.slice(half).reduce((a,po) => a + (po.actualDays - po.expectedDays), 0) / (done.length - half) : 0;
+  return { pos, done, recent, recentLate, avgDelay, earlyAvg, lateAvg,
+           lateRate: done.length ? done.filter(po => po.actualDays > po.expectedDays).length / done.length : 0 };
+}
+
+/* ---------- DETECTORS ---------- */
+function detectAll(){
+  const F = []; let fid = 0;
+  const push = f => F.push({ id:'F' + (++fid), ...f });
+
+  DB.products.forEach(p => {
+    const m = productMetrics(p);
+    if (p.stock <= 0 || m.stockValue < 5000 || m.coverDays < 75) return;
+    const coverLabel = m.coverDays === Infinity ? 'never' : Math.round(m.coverDays) + ' days';
+    const sev = m.stockValue >= 50000 ? 'high' : m.stockValue >= 20000 ? 'medium' : 'low';
+    push({
+      sev, cat:'Inventory', bucket:'locked',
+      title:`${p.name} — capital locked in slow-moving stock`,
+      blurb:`${p.stock} units (${inr(m.stockValue)}) with ${coverLabel} of cover at current sell-through.`,
+      impact:m.stockValue, impactLabel:'Capital locked', confidence:'High', points:m.last90 + ' sales records',
+      why:{
+        headline:`${p.name} is holding ${p.stock} units against a demand rate that does not justify it.`,
+        body:`At the current 30-day run rate of ${m.rate30.toFixed(2)} units/day, existing stock represents ${coverLabel} of forward cover. Industry-typical cover for this category is 45–60 days.`,
+        evidence:[['Current stock on hand', p.stock + ' units'],['Stock value at cost', inr(m.stockValue)],['Units sold — last 30 days', m.last30 + ' units'],['Units sold — last 90 days', m.last90 + ' units'],['Average daily demand (30d)', m.rate30.toFixed(2) + ' units/day'],['Days of cover remaining', coverLabel],['Last recorded sale', m.daysSinceSale + ' days ago'],['Purchase cost per unit', inr(p.cost)]],
+        chain:null,
+        impactText:`${inr(m.stockValue)} of working capital is tied up in inventory that is not converting to revenue at a healthy rate.`,
+        action:`Review the reorder quantity and threshold for ${p.name}. Consider a clearance or bundle promotion to release the tied-up capital.`,
+        refs:[p.id, 'inventory_ledger', 'purchase_orders']
+      }
+    });
+  });
+
+  DB.products.forEach(p => {
+    const m = productMetrics(p);
+    if (m.lostUnits < 20) return;
+    const sev = m.lostRevenue >= 40000 ? 'critical' : m.lostRevenue >= 15000 ? 'high' : 'medium';
+    const stockoutEvents = []; let cur = null;
+    p.ledger.forEach(l => {
+      if (l.lost > 0){ if (!cur) cur = { start:l.day, end:l.day, lost:0 }; cur.end = l.day; cur.lost += l.lost; }
+      else if (cur){ stockoutEvents.push(cur); cur = null; }
+    });
+    if (cur) stockoutEvents.push(cur);
+    push({
+      sev, cat:'Stockouts', bucket:'missed',
+      title:`${p.name} — repeated stockouts against high demand`,
+      blurb:`Out of stock on ${m.stockoutDays} days across ${stockoutEvents.length} separate events, still averaging ${m.rate30.toFixed(1)} units/day of demand.`,
+      impact:m.lostRevenue, impactLabel:'Missed revenue', confidence:'High', points:m.stockoutDays + ' stockout days',
+      why:{
+        headline:`${p.name} ran out of stock ${stockoutEvents.length} times in ${DAYS} days, and demand never dropped.`,
+        body:`When stock hits zero, every unit of unmet demand is a sale that did not happen. Sentinel estimates unmet demand by comparing demand rate on in-stock days against sell-through on stockout days.`,
+        evidence:[['Total stockout days', m.stockoutDays + ' days'],['Distinct stockout events', stockoutEvents.length],['Estimated unmet demand', m.lostUnits + ' units'],['Selling price per unit', inr(p.price)],['Estimated missed revenue', inr(m.lostRevenue)],['Stockouts in last 60 days', m.stockoutDays60 + ' days'],['Average daily demand', m.rate30.toFixed(2) + ' units/day'],['Reorder threshold', p.reorder + ' units'],['Supplier base lead time', DB.suppliers.find(s => s.id === p.supplier).baseLead + ' days']],
+        chain:null,
+        impactText:`Every stockout day removes a product customers actively want from the shelf. At ${inr(p.price)} per unit and ${m.lostUnits} unmet units, that's roughly ${inr(m.lostRevenue)} of foregone revenue.`,
+        action:`Raise the reorder threshold for ${p.name} so an order is placed with at least ${Math.ceil(m.rate30 * (DB.suppliers.find(s => s.id === p.supplier).baseLead + 4))} units of buffer.`,
+        refs:[p.id, 'daily_inventory_ledger', 'demand_estimates']
+      }
+    });
+  });
+
+  DB.suppliers.forEach(s => {
+    const sm = supplierMetrics(s);
+    if (sm.recent.length < 3) return;
+    const lateRecent = sm.recentLate.length;
+    if (lateRecent < 2 && sm.avgDelay < 1.2) return;
+    const sev = lateRecent >= 4 ? 'high' : lateRecent >= 3 ? 'medium' : 'low';
+    const trendUp = sm.lateAvg > sm.earlyAvg + 0.8;
+    push({
+      sev, cat:'Supplier', bucket:'ops',
+      title:`${s.name} — delivery reliability degrading`,
+      blurb:`${lateRecent} of the last ${sm.recent.length} orders arrived later than agreed. Average delay: ${sm.avgDelay.toFixed(1)} days.`,
+      impact:0, impactLabel:'+' + sm.avgDelay.toFixed(1) + 'd lead',
+      confidence: lateRecent >= 4 ? 'High' : 'Medium', points: sm.done.length + ' deliveries',
+      why:{
+        headline:`${s.name} has exceeded the agreed lead time on ${sm.recentLate.length} of the last ${sm.recent.length} purchase orders.`,
+        body: trendUp
+          ? `Not an isolated incident. Splitting the order history in half shows average delay moving from ${sm.earlyAvg.toFixed(1)} to ${sm.lateAvg.toFixed(1)} days — a clear degradation trend.`
+          : `Delays are consistent rather than trending, suggesting a structural capacity or logistics issue rather than a one-off disruption.`,
+        evidence:[['Supplier', s.name + ' (' + s.id + ')'],['Agreed base lead time', s.baseLead + ' days'],['Total completed orders', sm.done.length],['Late in last ' + sm.recent.length + ' orders', lateRecent + ' orders'],['Overall late rate', pct(sm.lateRate)],['Average delay (all orders)', '+' + sm.avgDelay.toFixed(2) + ' days'],['Average delay — early half', '+' + sm.earlyAvg.toFixed(2) + ' days'],['Average delay — recent half', '+' + sm.lateAvg.toFixed(2) + ' days'],['Trend', trendUp ? 'Deteriorating' : 'Stable (elevated)']],
+        chain:null,
+        impactText:`Longer lead times reduce the safety margin on every SKU this supplier serves. Where reorder thresholds assumed a ${s.baseLead}-day lead time, a ${sm.avgDelay.toFixed(1)}-day overrun is enough to create stockouts.`,
+        action:`Request a revised delivery SLA from ${s.name} with penalties, or qualify a secondary supplier for the affected SKUs.`,
+        refs:[s.id, 'purchase_orders', 'delivery_records']
+      }
+    });
+  });
+
+  const totalSoldAll = DB.products.reduce((a,p) => a + p.sales.reduce((x,s) => x + s.qty, 0), 0);
+  const totalReturns = DB.products.reduce((a,p) => a + p.returns.length, 0);
+  const overallReturnRate = totalSoldAll > 0 ? totalReturns / totalSoldAll : 0;
+
+  DB.products.forEach(p => {
+    const m = productMetrics(p);
+    if (m.returns < 5 || m.returnRate < overallReturnRate * 2.2) return;
+    const reasonCount = {}, variantCount = {};
+    p.returns.forEach(r => {
+      reasonCount[r.reason] = (reasonCount[r.reason] || 0) + 1;
+      if (r.variant) variantCount[r.variant] = (variantCount[r.variant] || 0) + 1;
+    });
+    const topReason  = Object.entries(reasonCount).sort((a,b) => b[1]-a[1])[0];
+    const topVariant = Object.entries(variantCount).sort((a,b) => b[1]-a[1])[0];
+    const reasonShare  = topReason[1] / m.returns;
+    const variantShare = topVariant ? topVariant[1] / m.returns : 0;
+    const baselineReturns = Math.round(m.totalSold * overallReturnRate);
+    const excessReturns = Math.max(0, m.returns - baselineReturns);
+    const leakage = excessReturns * p.price;
+    const concentrated = reasonShare > 0.55 || variantShare > 0.55;
+    const sev = leakage >= 60000 ? 'high' : leakage >= 20000 ? 'medium' : 'low';
+    push({
+      sev, cat:'Returns', bucket:'returns',
+      title:`${p.name} — return rate ${(m.returnRate/overallReturnRate).toFixed(1)}× the business average`,
+      blurb:`${m.returns} returns from ${m.totalSold} sold (${pct(m.returnRate)} vs ${pct(overallReturnRate)} baseline).${concentrated ? ` ${Math.round(Math.max(reasonShare, variantShare)*100)}% concentrate on one reason/variant.` : ''}`,
+      impact:leakage, impactLabel:'Return leakage',
+      confidence: concentrated ? 'High' : 'Medium', points: m.returns + ' return records',
+      why:{
+        headline:`${p.name} returns at ${pct(m.returnRate)} against a business-wide baseline of ${pct(overallReturnRate)}.`,
+        body: concentrated
+          ? `Returns are not random. ${topReason[1]} of ${m.returns} returns (${Math.round(reasonShare*100)}%) share the same reason${topVariant ? `, and ${topVariant[1]} (${Math.round(variantShare*100)}%) share the variant "${topVariant[0]}"` : ''}.`
+          : `The elevated rate is distributed across reasons — possibly a broader expectation or quality gap rather than a single defect.`,
+        evidence:[['Units sold', m.totalSold],['Units returned', m.returns],['Product return rate', pct(m.returnRate)],['Business-wide return rate', pct(overallReturnRate)],['Multiple vs baseline', (m.returnRate/overallReturnRate).toFixed(1) + '×'],['Expected returns at baseline', baselineReturns + ' units'],['Excess returns', excessReturns + ' units'],['Top return reason', topReason[0] + ' — ' + topReason[1] + ' (' + Math.round(reasonShare*100) + '%)'], ...(topVariant ? [['Top variant concentration', topVariant[0] + ' — ' + topVariant[1] + ' (' + Math.round(variantShare*100) + '%)']] : []), ['Refund value per unit', inr(p.price)]],
+        chain:null,
+        impactText:`Returns above baseline cost roughly ${inr(leakage)} in refunds, plus reverse logistics and restocking. Sentinel is not claiming the product is defective — it is flagging a statistically abnormal concentration.`,
+        action:`Pull the return reasons and variant breakdown for ${p.name} and inspect the flagged variant physically.`,
+        refs:[p.id, 'returns', 'refund_ledger']
+      }
+    });
+  });
+
+  DB.products.forEach(p => {
+    const done = p.pos.filter(po => po.actualDays !== null).sort((a,b) => a.orderDay - b.orderDay);
+    if (done.length < 3) return;
+    const first = done[0], last = done[done.length - 1];
+    const increase = (last.unitCost - first.unitCost) / first.unitCost;
+    if (increase < 0.07) return;
+    const totalQty = done.reduce((a,po) => a + po.qty, 0);
+    const unitDelta = last.unitCost - first.unitCost;
+    const annualised = unitDelta * totalQty;
+    const sev = increase >= 0.15 ? 'medium' : 'low';
+    push({
+      sev, cat:'Pricing', bucket:'ops',
+      title:`${p.name} — supplier cost creeping upward`,
+      blurb:`Unit cost moved from ${inr(first.unitCost)} to ${inr(last.unitCost)} (+${pct(increase)}) across ${done.length} purchase orders with no renegotiation recorded.`,
+      impact:annualised, impactLabel:'Cost drift', confidence:'High', points: done.length + ' purchase orders',
+      why:{
+        headline:`The landed unit cost for ${p.name} has risen ${pct(increase)} over ${DAYS} days.`,
+        body:`Each individual price change is small enough to pass unnoticed, but the cumulative effect compounds across every unit purchased.`,
+        evidence:[['Supplier', DB.suppliers.find(s => s.id === p.supplier).name],['First recorded unit cost', inr(first.unitCost) + ' (' + dstr(first.orderDate) + ')'],['Latest recorded unit cost', inr(last.unitCost) + ' (' + dstr(last.orderDate) + ')'],['Total increase', '+' + pct(increase)],['Absolute increase per unit', '+' + inr(unitDelta)],['Units purchased in period', totalQty],['Cumulative cost impact', inr(annualised)],['Selling price', inr(p.price) + ' (unchanged)']],
+        chain:null,
+        impactText:`If the selling price has not moved, every rupee of cost increase comes directly out of gross margin.`,
+        action:`Open a pricing review with ${DB.suppliers.find(s => s.id === p.supplier).name}. Compare against alternative suppliers.`,
+        refs:[p.id, 'purchase_invoices', 'supplier_price_history']
+      }
+    });
+  });
+
+  const pending = DB.receivables.filter(r => r.status === 'pending');
+  const overdue = pending.filter(r => r.dueDay < DAYS - 1);
+  const overdueValue = overdue.reduce((a,r) => a + r.amount, 0);
+  if (overdue.length){
+    const worst = overdue.slice().sort((a,b) => (DAYS-1-a.dueDay) - (DAYS-1-b.dueDay))[0];
+    const sev = overdueValue >= 150000 ? 'high' : overdueValue >= 50000 ? 'medium' : 'low';
+    push({
+      sev, cat:'Receivables', bucket:'receivable',
+      title:`${overdue.length} invoices overdue — ${inr(overdueValue)} outstanding`,
+      blurb:`${inr(overdueValue)} across ${overdue.length} invoices past due. Oldest is ${DAYS-1-worst.dueDay} days overdue (${worst.customer}).`,
+      impact:overdueValue, impactLabel:'Overdue', confidence:'High', points: overdue.length + ' invoices',
+      why:{
+        headline:`${overdue.length} customer invoices totalling ${inr(overdueValue)} have passed their due date without payment.`,
+        body:`Overdue receivables are a cash-flow loss rather than a revenue loss — the sale happened, but the money is not available to run the business.`,
+        evidence:[['Total pending invoices', pending.length],['Overdue invoices', overdue.length],['Total overdue value', inr(overdueValue)],['Oldest overdue invoice', worst.id + ' — ' + (DAYS-1-worst.dueDay) + ' days'],['Largest single exposure', inr(Math.max(...overdue.map(r => r.amount)))],['Customers with overdue balances', new Set(overdue.map(r => r.customer)).size]],
+        chain:null,
+        impactText:`${inr(overdueValue)} of earned revenue is sitting outside the business.`,
+        action:`Prioritise follow-up on the top three overdue accounts by value. For chronic late payers, consider shortening payment terms.`,
+        refs:['receivables', 'payment_records', 'customer_invoices']
+      }
+    });
+  }
+
+  const byCust = {};
+  DB.receivables.forEach(r => { if (!byCust[r.customer]) byCust[r.customer] = []; byCust[r.customer].push(r); });
+  Object.entries(byCust).forEach(([name, rows]) => {
+    const withLate = rows.filter(r => r.status === 'paid' && r.daysLate > 0);
+    if (withLate.length < 3) return;
+    const avgLate = withLate.reduce((a,r) => a + r.daysLate, 0) / withLate.length;
+    if (avgLate < 15) return;
+    const outstanding = rows.filter(r => r.status === 'pending').reduce((a,r) => a + r.amount, 0);
+    const sev = avgLate >= 25 ? 'medium' : 'low';
+    push({
+      sev, cat:'Receivables', bucket:'receivable',
+      title:`${name} — chronic late payer`,
+      blurb:`Pays an average of ${avgLate.toFixed(0)} days late across ${withLate.length} settled invoices.${outstanding ? ` ${inr(outstanding)} currently outstanding.` : ''}`,
+      impact:outstanding || 0, impactLabel: outstanding ? 'Outstanding' : 'Pattern',
+      confidence:'High', points: withLate.length + ' settled invoices',
+      why:{
+        headline:`${name} has consistently paid later than the agreed 30-day terms.`,
+        body:`Across ${withLate.length} settled invoices the average delay is ${avgLate.toFixed(0)} days. This is a behavioural pattern that should be priced into cash-flow planning.`,
+        evidence:[['Customer', name],['Settled invoices analysed', withLate.length],['Average days late', avgLate.toFixed(1) + ' days'],['Worst recorded delay', Math.max(...withLate.map(r => r.daysLate)) + ' days'],['Currently outstanding', outstanding ? inr(outstanding) : '—'],['Agreed terms', '30 days']],
+        chain:null,
+        impactText:`Predictable lateness makes cash-flow planning harder.`,
+        action:`Move ${name} to shorter payment terms or require partial advance payment.`,
+        refs:['payment_records', 'customer_ledger']
+      }
+    });
+  });
+
+  const s1 = DB.suppliers.find(s => s.id === 'S1');
+  if (s1){
+    const sm = supplierMetrics(s1);
+    const affected = DB.products.filter(p => p.supplier === 'S1')
+      .map(p => ({ p, m: productMetrics(p) }))
+      .filter(x => x.m.lostUnits > 0)
+      .sort((a,b) => b.m.lostRevenue - a.m.lostRevenue);
+    if (affected.length && sm.recentLate.length >= 2){
+      const top = affected[0];
+      const totalLost = affected.reduce((a,x) => a + x.m.lostRevenue, 0);
+      const totalUnits = affected.reduce((a,x) => a + x.m.lostUnits, 0);
+      const affectedNames = affected.map(x => x.p.name);
+      push({
+        sev:'critical', cat:'Root Cause', bucket:'chain',
+        title:`Supplier delays → stockouts → ${inrShort(totalLost)} missed sales`,
+        blurb:`Sentinel connected three separate datasets. Delivery delays from ${s1.name} propagate into replenishment failures on ${affected.length} SKUs, which then produce measurable stockouts and lost sales.`,
+        impact:totalLost, impactLabel:'Cascading loss', confidence:'High',
+        points: sm.done.length + ' POs + ' + affected.reduce((a,x) => a + x.m.stockoutDays, 0) + ' stockout days',
+        why:{
+          headline:`${s1.name} is late, the SKUs it supplies run out, and the business loses sales it never sees on a dashboard.`,
+          body:`This is the finding a normal dashboard cannot surface. Each individual signal — a late delivery, a low stock level, a missed order — looks unremarkable on its own. Sentinel links them across datasets.`,
+          chain:[
+            { label:'Trigger',  text:`${s1.name} delivery delays increased`, sub:'+' + sm.lateAvg.toFixed(1) + 'd avg recent' },
+            { label:'Effect', text:'Replenishment cycle slowed', sub: sm.recentLate.length + '/' + sm.recent.length + ' late' },
+            { label:'Effect', text:`${top.p.name} + ${affected.length-1} SKUs ran out`, sub: affected.reduce((a,x) => a + x.m.stockoutDays, 0) + ' stockout days' },
+            { label:'Effect', text:'Customer orders unfulfilled', sub: totalUnits + ' units unmet' },
+            { label:'Outcome',  text:'Missed sales opportunity', sub: inr(totalLost) }
+          ],
+          evidence:[['Supplier with delays', s1.name + ' (' + s1.id + ')'],['Late deliveries — recent orders', sm.recentLate.length + ' of ' + sm.recent.length],['Average delay — recent half', '+' + sm.lateAvg.toFixed(2) + ' days'],['Average delay — early half', '+' + sm.earlyAvg.toFixed(2) + ' days'],['SKUs affected', affected.length + ' — ' + affectedNames.join(', ')],['Total stockout days across SKUs', affected.reduce((a,x) => a + x.m.stockoutDays, 0)],['Estimated unmet demand', totalUnits + ' units'],['Estimated missed revenue', inr(totalLost)]],
+          impactText:`The delays themselves cost nothing on paper — no invoice changes, no line item shows a loss. The cost only appears as sales that never happened. Sentinel estimates that at ${inr(totalLost)}.`,
+          action:`Two independent fixes: (1) increase safety stock and raise the reorder threshold on the affected SKUs sourced from ${s1.name}; (2) initiate a supplier performance review and qualify a backup supplier.`,
+          refs:['purchase_orders', 'delivery_records', 'daily_inventory_ledger', s1.id, top.p.id]
+        }
+      });
+    }
+  }
+
+  DB.products.forEach(p => {
+    const m = productMetrics(p);
+    if (m.lostUnits60 < 12) return;
+    const enquiries = Math.round(m.lostUnits60 * 0.55);
+    if (enquiries < 6) return;
+    push({
+      sev: m.lostUnits60 >= 60 ? 'high' : 'medium',
+      cat:'Demand', bucket:'missed',
+      title:`Customer demand for ${p.name} is being turned away`,
+      blurb:`~${enquiries} customer enquiries for this product in the last 60 days coincided with it being unavailable.`,
+      impact: m.lostUnits60 * p.price, impactLabel:'Unmet 60d', confidence:'Medium',
+      points: m.stockoutDays60 + ' stockout days (60d)',
+      why:{
+        headline:`Customers asked for ${p.name} while it was out of stock roughly ${enquiries} times in 60 days.`,
+        body:`Unmet demand is invisible in sales data — a customer who cannot buy does not generate a transaction, a return, or a complaint. Sentinel estimates it from stockout duration multiplied by observed in-stock demand rate.`,
+        evidence:[['Stockout days — last 60 days', m.stockoutDays60 + ' days'],['Estimated unmet units (60d)', m.lostUnits60 + ' units'],['Estimated customer enquiries', '~' + enquiries],['Average daily demand', m.rate30.toFixed(2) + ' units/day'],['Selling price', inr(p.price)],['Estimated unmet value (60d)', inr(m.lostUnits60 * p.price)]],
+        chain:null,
+        impactText:`Unmet demand has a second-order cost: customers who cannot get an item once often stop checking. This is a retention risk, not just a revenue gap.`,
+        action:`Prioritise replenishment reliability for ${p.name}. Consider a back-in-stock notification feature.`,
+        refs:[p.id, 'demand_estimates', 'customer_enquiries']
+      }
+    });
+  });
+
+  F.sort((a,b) => (SEV_RANK[b.sev] - SEV_RANK[a.sev]) || (b.impact - a.impact));
+  return F;
+}
+
+/* ==========================================================================
+   STATE
+   ========================================================================== */
+let FINDINGS = [];
+let activeFilter = 'all';
+let activeDataTab = 'products';
+const undoStack = [];
+function pushUndo(fn){ undoStack.push(fn); if (undoStack.length > 25) undoStack.shift(); }
+
+/* ==========================================================================
+   RENDER — HERO + METRICS
+   ========================================================================== */
+function renderKPIs(){
+  const locked = FINDINGS.filter(f => f.bucket === 'locked').reduce((a,f) => a + f.impact, 0);
+  const missed = FINDINGS.filter(f => f.bucket === 'missed').reduce((a,f) => a + f.impact, 0);
+  const returns = FINDINGS.filter(f => f.bucket === 'returns').reduce((a,f) => a + f.impact, 0);
+  const receivable = FINDINGS.filter(f => f.bucket === 'receivable').reduce((a,f) => a + f.impact, 0);
+  const total = locked + missed + returns + receivable;
+
+  animateNumber(document.getElementById('heroValue'), total, 'inr');
+  document.getElementById('heroSub').innerHTML =
+    `Across <b>${FINDINGS.length} findings</b> and <b>${DAYS} days</b> of operational data`;
+
+  const metrics = [
+    { label:'Capital Locked', value:locked, sub:'Slow-moving stock', cls:'m-blue',
+      icon:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>' },
+    { label:'Missed Revenue', value:missed, sub:'Unmet demand', cls:'m-red',
+      icon:'<path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>' },
+    { label:'Return Leakage', value:returns, sub:'Excess above baseline', cls:'m-purple',
+      icon:'<path d="M3 12a9 9 0 109-9 9 9 0 00-9 9z"/><path d="M9 12l2 2 4-4"/>' },
+    { label:'Overdue', value:receivable, sub:'Outside the business', cls:'m-green',
+      icon:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' },
+  ];
+  document.getElementById('metricsRow').innerHTML = metrics.map(m => `
+    <div class="metric ${m.cls}">
+      <div class="metric-header">
+        <div class="metric-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${m.icon}</svg>
+        </div>
+        <div class="metric-label">${esc(m.label)}</div>
+      </div>
+      <div class="metric-value" data-count="${m.value}" data-format="inr">₹0</div>
+      <div class="metric-sub">${esc(m.sub)}</div>
+    </div>
+  `).join('');
+
+  document.querySelectorAll('.metric-value').forEach(el => {
+    animateNumber(el, +el.dataset.count, el.dataset.format);
+  });
+
+  const overviewCount = document.getElementById('overviewCount');
+  if (overviewCount) overviewCount.textContent = FINDINGS.length;
+}
+
+function animateNumber(el, target, format){
+  if (!el) return;
+  const startTime = performance.now();
+  const duration = 950;
+  const fmt = v => format === 'inr' ? inrShort(v) : Math.round(v).toLocaleString('en-IN');
+  function tick(now){
+    const p = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(target * eased);
+    if (p < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(target);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ==========================================================================
+   FINDINGS
+   ========================================================================== */
+function findingRow(f){
+  const sevClass = f.sev;
+  const impactClass = f.sev === 'critical' ? 'crit' : f.sev === 'high' ? 'high' : '';
+  const impactText = f.impact > 0 ? inrShort(f.impact) : f.impactLabel;
+  return `
+    <button class="finding-row ${sevClass}" data-id="${f.id}">
+      <span class="sev-dot ${f.sev}"></span>
+      <div class="fr-content">
+        <div class="fr-cat">${esc(f.cat)}</div>
+        <div class="fr-title">${esc(f.title)}</div>
+      </div>
+      <div class="fr-impact ${impactClass}">${esc(impactText)}</div>
+      <svg class="fr-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>`;
+}
+
+function renderFeeds(){
+  const counts = { all:FINDINGS.length, critical:0, high:0, medium:0, low:0 };
+  FINDINGS.forEach(f => counts[f.sev]++);
+
+  const top = FINDINGS.slice(0, 5);
+  document.getElementById('feedOverview').innerHTML = top.length
+    ? top.map(findingRow).join('')
+    : `<div class="empty-state" style="border:none;border-radius:0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        <h4>No findings</h4><p>Everything looks healthy.</p>
+      </div>`;
+
+  const segHTML = `
+    <button data-filter="all" class="${activeFilter==='all'?'active':''}">All ${counts.all}</button>
+    <button data-filter="critical" class="${activeFilter==='critical'?'active':''}"><span class="p-dot" style="background:var(--crit);box-shadow:0 0 6px var(--crit)"></span>${counts.critical}</button>
+    <button data-filter="high" class="${activeFilter==='high'?'active':''}"><span class="p-dot" style="background:var(--hi);box-shadow:0 0 6px var(--hi)"></span>${counts.high}</button>
+    <button data-filter="medium" class="${activeFilter==='medium'?'active':''}"><span class="p-dot" style="background:var(--med);box-shadow:0 0 6px var(--med)"></span>${counts.medium}</button>
+    <button data-filter="low" class="${activeFilter==='low'?'active':''}"><span class="p-dot" style="background:var(--lo);box-shadow:0 0 6px var(--lo)"></span>${counts.low}</button>
+  `;
+  document.getElementById('filterSeg').innerHTML = segHTML;
+
+  const list = activeFilter === 'all' ? FINDINGS : FINDINGS.filter(f => f.sev === activeFilter);
+  document.getElementById('feedAll').innerHTML = list.length
+    ? list.map(findingRow).join('')
+    : `<div class="empty-state" style="border:none;border-radius:0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        <h4>No findings at this severity</h4><p>Try a different filter.</p>
+      </div>`;
+
+  document.getElementById('findingsCount').textContent =
+    `${FINDINGS.length} findings · ${inrShort(FINDINGS.reduce((a,f) => a + f.impact, 0))} total`;
+
+  const badge = document.getElementById('navCount');
+  const critical = counts.critical + counts.high;
+  badge.textContent = critical;
+  badge.classList.toggle('zero', critical === 0);
+
+  const bizMeta = document.getElementById('bizMeta');
+  if (bizMeta) bizMeta.textContent = `${DAYS} days · ${DB.products.length} SKUs`;
+}
+
+/* ==========================================================================
+   DRAWER
+   ========================================================================== */
+function openDrawer(id){
+  const f = FINDINGS.find(x => x.id === id);
+  if (!f) return;
+  document.getElementById('dSev').className = 'sev-chip ' + f.sev;
+  document.getElementById('dSev').textContent = f.sev.toUpperCase();
+  document.getElementById('dTitle').textContent = f.title;
+  document.getElementById('dMeta').innerHTML =
+    `<span>${esc(f.cat)}</span><span class="sep">·</span><span>Confidence <b>${esc(f.confidence)}</b></span><span class="sep">·</span><span>${esc(f.points)}</span>`;
+
+  const w = f.why;
+  let body = '';
+  body += `<div class="d-block"><h4>Why was this flagged</h4>
+    <p class="lead">${esc(w.headline)}</p>
+    <p>${esc(w.body)}</p>
+  </div>`;
+
+  if (w.chain){
+    body += `<div class="d-block"><h4>Causal chain</h4>
+      <div class="chain">
+        ${w.chain.map((c,i) => `
+          <div class="chain-node">
+            <small>${esc(c.label)}</small>
+            ${esc(c.text)}
+            <div class="sub">${esc(c.sub)}</div>
+          </div>
+          ${i < w.chain.length - 1 ? '<div class="chain-arrow">→</div>' : ''}
+        `).join('')}
+      </div>
+    </div>`;
+  }
+
+  body += `<div class="d-block"><h4>Evidence</h4>
+    <table class="ev-table">
+      ${w.evidence.map(([k,v]) => {
+        const s = String(v).toLowerCase();
+        const bad = /late|delay|stockout|overdue|excess|missed|increase|\+/.test(s) && !/^(on time|healthy|none|—|0)/.test(s);
+        const good = /^(0|none|—|healthy|on time)/.test(s);
+        return `<tr><td>${esc(k)}</td><td class="${bad ? 'bad' : good ? 'good' : ''}">${esc(v)}</td></tr>`;
+      }).join('')}
+    </table>
+  </div>`;
+
+  body += `<div class="d-block"><h4>Possible impact</h4><div class="callout warn">${esc(w.impactText)}</div></div>`;
+  body += `<div class="d-block"><h4>Suggested investigation</h4><div class="callout info">${esc(w.action)}</div></div>`;
+  body += `<div class="d-block"><h4>Source records</h4>
+    <div class="refs">${w.refs.map(r => `<span class="ref">${esc(r)}</span>`).join('')}</div>
+  </div>`;
+  body += `<div class="callout ok" style="font-size:12px">
+    <b>Note:</b> Sentinel flags abnormal patterns for human investigation. It does not assert causation as fact.
+  </div>`;
+
+  document.getElementById('dBody').innerHTML = body;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('scrim').classList.add('open');
+}
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('scrim').classList.remove('open');
+}
+
+/* ==========================================================================
+   INVESTIGATE
+   ========================================================================== */
+function renderInvestigate(){
+  const host = document.getElementById('investigate');
+  let html = '';
+
+  html += `<div class="card">
+    <h3>Supplier Delivery Reliability</h3>
+    <div class="cd">Actual lead time vs agreed lead time, per purchase order</div>
+    <div style="display:flex;flex-direction:column;gap:24px">`;
+
+  DB.suppliers.forEach(s => {
+    const sm = supplierMetrics(s);
+    const shown = sm.done.slice(-14);
+    if (!shown.length) return;
+    const maxD = Math.max(...shown.map(po => po.actualDays), s.baseLead + 1);
+    const bars = shown.map(po => {
+      const h = Math.round((po.actualDays / maxD) * 100);
+      const expH = Math.round((po.expectedDays / maxD) * 100);
+      const late = po.actualDays > po.expectedDays;
+      return `<div style="flex:1;min-width:14px;display:flex;flex-direction:column;align-items:center;gap:5px">
+        <div style="width:100%;height:68px;display:flex;align-items:flex-end;position:relative">
+          <div style="position:absolute;bottom:${expH}%;left:0;right:0;height:1px;background:var(--lo);opacity:0.55;box-shadow:0 0 6px var(--lo)"></div>
+          <div title="${po.id} — ${po.actualDays}d (agreed ${po.expectedDays}d)"
+               style="width:100%;height:${h}%;border-radius:3px 3px 0 0;
+               background:${late
+                 ? 'linear-gradient(180deg,#FFB340,#FF453A)'
+                 : 'linear-gradient(180deg,#64D2FF,#0A84FF)'};
+               box-shadow:0 0 12px ${late ? 'rgba(255,69,58,.5)' : 'rgba(10,132,255,.4)'};
+               transition:transform .25s var(--ease-out);
+               cursor:pointer"
+               onmouseover="this.style.transform='scaleY(1.05)'"
+               onmouseout="this.style.transform='scaleY(1)'"></div>
+        </div>
+        <div style="font-size:9px;color:var(--text-3);font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace">${po.actualDays}d</div>
+      </div>`;
+    }).join('');
+
+    html += `<div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap">
+        <b style="font-size:13px;font-weight:600">${esc(s.name)}</b>
+        <span class="tag ${sm.lateRate > 0.4 ? 'red' : sm.lateRate > 0.2 ? 'amber' : 'green'}"><i></i>${pct(sm.lateRate)} late</span>
+        <span class="tag grey"><i></i>${sm.done.length} orders</span>
+        <span class="tag ${sm.lateAvg > sm.earlyAvg + 0.8 ? 'red' : 'grey'}"><i></i>+${sm.avgDelay.toFixed(1)}d avg</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--text-3);font-variant-numeric:tabular-nums;font-family:'JetBrains Mono',monospace">agreed ${s.baseLead}d</span>
+      </div>
+      <div style="display:flex;gap:5px;align-items:flex-end">${bars}</div>
+    </div>`;
+  });
+
+  html += `</div>
+    <div class="legend">
+      <span><i style="background:linear-gradient(180deg,#64D2FF,#0A84FF)"></i> On time / early</span>
+      <span><i style="background:linear-gradient(180deg,#FFB340,#FF453A)"></i> Late</span>
+      <span><i style="background:var(--lo);height:2px;border-radius:0"></i> Agreed lead time</span>
+    </div>
+  </div>`;
+
+  html += `<div class="card"><h3>Inventory Health by SKU</h3>
+    <div class="cd">Stock cover, stockout exposure and capital tied up</div>
+    <div class="table-wrap" style="margin:0;background:transparent;border:none;backdrop-filter:none;box-shadow:none;animation:none"><table class="data">
+      <thead><tr><th>Product</th><th>Stock</th><th>30d Sales</th><th>Cover</th><th>Stockouts</th><th>Lost Units</th><th>Value</th><th>Status</th></tr></thead>
+      <tbody>`;
+  DB.products.forEach(p => {
+    const m = productMetrics(p);
+    const coverTxt = m.coverDays === Infinity ? '∞' : Math.round(m.coverDays) + 'd';
+    let status = 'Healthy', cls = 'green';
+    if (m.stockoutDays >= 10) { status = 'Stockouts'; cls = 'red'; }
+    else if (m.coverDays > 150) { status = 'Dead stock'; cls = 'amber'; }
+    else if (m.coverDays > 75) { status = 'Slow moving'; cls = 'amber'; }
+    else if (m.returnRate > 0.12) { status = 'High returns'; cls = 'red'; }
+    html += `<tr>
+      <td><strong>${esc(p.name)}</strong> <span class="mono">${p.id}</span></td>
+      <td class="num">${p.stock}</td>
+      <td class="num">${m.last30}</td>
+      <td class="num">${coverTxt}</td>
+      <td class="num" style="color:${m.stockoutDays > 5 ? 'var(--crit)' : 'inherit'}">${m.stockoutDays}</td>
+      <td class="num" style="color:${m.lostUnits > 20 ? 'var(--crit)' : 'inherit'}">${m.lostUnits}</td>
+      <td class="num">${inr(m.stockValue)}</td>
+      <td><span class="tag ${cls}"><i></i>${status}</span></td>
+    </tr>`;
+  });
+  html += `</tbody></table></div></div>`;
+
+  const totalSoldAll = DB.products.reduce((a,p) => a + p.sales.reduce((x,s) => x + s.qty, 0), 0);
+  const totalReturns = DB.products.reduce((a,p) => a + p.returns.length, 0);
+  const overallRate = totalSoldAll ? totalReturns / totalSoldAll : 0;
+
+  html += `<div class="card"><h3>Return Rate by Product</h3>
+    <div class="cd">Business-wide baseline: ${pct(overallRate)} · anything above 2× baseline is flagged</div>
+    <div style="display:flex;flex-direction:column;gap:12px">`;
+  DB.products.map(p => ({ p, m: productMetrics(p) }))
+    .sort((a,b) => b.m.returnRate - a.m.returnRate)
+    .forEach(({p, m}) => {
+      const w = Math.min(100, (m.returnRate / Math.max(overallRate * 5, 0.01)) * 100);
+      const baseW = Math.min(100, (overallRate / Math.max(overallRate * 5, 0.01)) * 100);
+      const flagged = m.returnRate > overallRate * 2.2 && m.returns >= 5;
+      html += `<div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+          <span style="color:${flagged ? 'var(--crit)' : 'var(--text-2)'};font-weight:${flagged ? 600 : 500}">${esc(p.name)}</span>
+          <span style="font-variant-numeric:tabular-nums;color:${flagged ? 'var(--crit)' : 'var(--text-3)'};font-family:'JetBrains Mono',monospace">${pct(m.returnRate)} · ${m.returns} returns</span>
+        </div>
+        <div style="height:5px;border-radius:5px;background:var(--surface-2);position:relative;overflow:hidden">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:${w}%;border-radius:5px;
+               background:${flagged
+                 ? 'linear-gradient(90deg,#FF453A,#FF375F)'
+                 : 'linear-gradient(90deg,#0A84FF,#BF5AF2)'};
+               box-shadow:0 0 12px ${flagged ? 'rgba(255,69,58,.5)' : 'rgba(10,132,255,.4)'};
+               transition:width .9s var(--ease-out)"></div>
+          <div style="position:absolute;left:${baseW}%;top:-3px;bottom:-3px;width:1.5px;background:var(--lo);box-shadow:0 0 6px var(--lo)"></div>
+        </div>
+      </div>`;
+    });
+  html += `</div>
+    <div class="legend"><span><i style="background:var(--lo);width:2px;border-radius:0"></i> Baseline ${pct(overallRate)}</span></div>
+  </div>`;
+
+  const concentrationProduct = DB.products.map(p => ({ p, m:productMetrics(p) }))
+    .filter(x => x.m.returns >= 5).sort((a,b) => b.m.returnRate - a.m.returnRate)[0];
+
+  if (concentrationProduct){
+    const p = concentrationProduct.p;
+    const rc = {}, vc = {};
+    p.returns.forEach(r => {
+      rc[r.reason] = (rc[r.reason] || 0) + 1;
+      if (r.variant) vc[r.variant] = (vc[r.variant] || 0) + 1;
+    });
+    const reasons = Object.entries(rc).sort((a,b) => b[1]-a[1]);
+    const variants = Object.entries(vc).sort((a,b) => b[1]-a[1]);
+    const total = p.returns.length;
+    html += `<div class="card"><h3>Return Concentration — ${esc(p.name)}</h3>
+      <div class="cd">Where the ${total} returns actually come from</div>
+      <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div>
+          <div style="font-size:10.5px;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-3);font-weight:700;margin-bottom:11px">By reason</div>
+          ${reasons.map(([r,n]) => `
+            <div class="bar-row">
+              <div class="name">${esc(r)}</div>
+              <div class="bar"><i class="${n/total > 0.5 ? 'crit' : ''}" style="width:${(n/total*100).toFixed(0)}%"></i></div>
+              <div class="val">${n} · ${Math.round(n/total*100)}%</div>
+            </div>`).join('')}
+        </div>
+        <div>
+          <div style="font-size:10.5px;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-3);font-weight:700;margin-bottom:11px">By variant</div>
+          ${variants.map(([v,n]) => `
+            <div class="bar-row">
+              <div class="name">${esc(v)}</div>
+              <div class="bar"><i class="${n/total > 0.5 ? 'crit' : ''}" style="width:${(n/total*100).toFixed(0)}%"></i></div>
+              <div class="val">${n} · ${Math.round(n/total*100)}%</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+  host.innerHTML = html;
+}
+
+/* ==========================================================================
+   DATA
+   ========================================================================== */
+function renderData(){
+  document.getElementById('dataSeg').innerHTML = `
+    <button data-dtab="products" class="${activeDataTab==='products'?'active':''}">Products</button>
+    <button data-dtab="sales" class="${activeDataTab==='sales'?'active':''}">Sales</button>
+    <button data-dtab="purchases" class="${activeDataTab==='purchases'?'active':''}">Purchases</button>
+    <button data-dtab="returns" class="${activeDataTab==='returns'?'active':''}">Returns</button>
+    <button data-dtab="receivables" class="${activeDataTab==='receivables'?'active':''}">Receivables</button>
+  `;
+  const pane = document.getElementById('dataPane');
+  let html = '';
+
+  if (activeDataTab === 'products'){
+    html += `<div class="form-card">
+      <h3>Add a product</h3>
+      <div class="cd">Newly added SKUs are analysed on the next scan</div>
+      <div class="form-grid">
+        <div class="field"><label>Product name</label><input id="np_name" placeholder="USB-C Hub" /></div>
+        <div class="field"><label>Category</label><input id="np_cat" placeholder="Accessories" value="Accessories" /></div>
+        <div class="field"><label>Cost (₹)</label><input id="np_cost" type="number" placeholder="500" /></div>
+        <div class="field"><label>Selling price (₹)</label><input id="np_price" type="number" placeholder="999" /></div>
+        <div class="field"><label>Opening stock</label><input id="np_stock" type="number" placeholder="50" /></div>
+        <div class="field"><label>Supplier</label><select id="np_sup">${DB.suppliers.map(s => `<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></div>
+        <div class="field"><button class="btn btn-primary" id="addProductBtn">Add</button></div>
+      </div>
+    </div>`;
+    html += `<div class="table-wrap">
+      <div class="table-head"><h3>Products</h3><span class="count">${DB.products.length} SKUs</span></div>
+      <table class="data">
+        <thead><tr><th>Product</th><th>Category</th><th>Cost</th><th>Price</th><th>Stock</th><th>Supplier</th><th>Returns</th><th></th></tr></thead>
+        <tbody>${DB.products.length ? DB.products.map(p => {
+          const m = productMetrics(p);
+          return `<tr>
+            <td><strong>${esc(p.name)}</strong> <span class="mono">${p.id}</span></td>
+            <td>${esc(p.cat)}</td>
+            <td class="num">${inr(p.cost)}</td>
+            <td class="num">${inr(p.price)}</td>
+            <td class="num">${p.stock}</td>
+            <td>${esc(DB.suppliers.find(s => s.id === p.supplier)?.name || '—')}</td>
+            <td class="num" style="color:${m.returnRate > 0.1 ? 'var(--crit)' : 'inherit'}">${pct(m.returnRate)}</td>
+            <td class="actions"><button class="btn-icon" data-del-product="${p.id}" title="Delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            </button></td>
+          </tr>`;
+        }).join('') : '<tr><td colspan="8" style="text-align:center;color:var(--text-3);padding:28px">No products yet.</td></tr>'}</tbody>
+      </table>
+    </div>`;
+  }
+
+  if (activeDataTab === 'sales'){
+    html += `<div class="form-card">
+      <h3>Record a sale</h3>
+      <div class="cd">Stock decrements immediately and detection re-runs</div>
+      <div class="form-grid">
+        <div class="field"><label>Product</label><select id="ns_prod">${DB.products.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select></div>
+        <div class="field"><label>Quantity</label><input id="ns_qty" type="number" value="1" min="1" /></div>
+        <div class="field"><button class="btn btn-primary" id="addSaleBtn">Record</button></div>
+      </div>
+    </div>`;
+    const recent = [];
+    DB.products.forEach(p => p.sales.slice(-10).forEach(s => recent.push({ ...s, productName:p.name, productId:p.id })));
+    recent.sort((a,b) => b.day - a.day);
+    html += `<div class="table-wrap">
+      <div class="table-head"><h3>Recent sales</h3><span class="count">${Math.min(recent.length, 40)} of ${DB.products.reduce((a,p) => a + p.sales.length, 0)}</span></div>
+      <table class="data">
+        <thead><tr><th>Date</th><th>Product</th><th>Units</th><th>Revenue</th><th></th></tr></thead>
+        <tbody>${recent.length ? recent.slice(0, 40).map(s => `<tr>
+          <td>${dstr(s.date)}</td><td>${esc(s.productName)}</td>
+          <td class="num">${s.qty}</td>
+          <td class="num">${inr(s.qty * (DB.products.find(p => p.id === s.productId)?.price || 0))}</td>
+          <td class="actions"><button class="btn-icon" data-del-sale="${s.productId}|${s.id}" title="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+          </button></td>
+        </tr>`).join('') : '<tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:28px">No sales.</td></tr>'}</tbody>
+      </table>
+    </div>`;
+  }
+
+  if (activeDataTab === 'purchases'){
+    html += `<div class="form-card">
+      <h3>Record a purchase order</h3>
+      <div class="cd">Records supplier, quantity, and actual delivery time</div>
+      <div class="form-grid">
+        <div class="field"><label>Product</label><select id="npo_prod">${DB.products.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select></div>
+        <div class="field"><label>Quantity</label><input id="npo_qty" type="number" value="50" min="1" /></div>
+        <div class="field"><label>Agreed (days)</label><input id="npo_exp" type="number" value="4" min="1" /></div>
+        <div class="field"><label>Actual (days)</label><input id="npo_act" type="number" value="7" min="1" /></div>
+        <div class="field"><button class="btn btn-primary" id="addPoBtn">Add</button></div>
+      </div>
+    </div>`;
+    const allPo = [];
+    DB.products.forEach(p => p.pos.forEach(po => allPo.push(po)));
+    allPo.sort((a,b) => b.orderDay - a.orderDay);
+    html += `<div class="table-wrap">
+      <div class="table-head"><h3>Purchase Orders</h3><span class="count">${allPo.length}</span></div>
+      <table class="data">
+        <thead><tr><th>PO</th><th>Product</th><th>Supplier</th><th>Qty</th><th>Ordered</th><th>Agreed</th><th>Actual</th><th>Status</th><th></th></tr></thead>
+        <tbody>${allPo.length ? allPo.slice(0, 40).map(po => {
+          const late = po.actualDays !== null && po.actualDays > po.expectedDays;
+          return `<tr>
+            <td class="mono">${po.id}</td>
+            <td>${esc(po.productName)}</td><td>${esc(po.supplierName)}</td>
+            <td class="num">${po.qty}</td><td>${dstr(po.orderDate)}</td>
+            <td class="num">${po.expectedDays}d</td>
+            <td class="num" style="color:${late ? 'var(--crit)' : 'var(--lo)'}">${po.actualDays !== null ? po.actualDays + 'd' : '—'}</td>
+            <td><span class="tag ${late ? 'red' : po.status === 'received' ? 'green' : 'blue'}"><i></i>${late ? 'Late' : po.status === 'received' ? 'On time' : 'In transit'}</span></td>
+            <td class="actions"><button class="btn-icon" data-del-po="${po.productId}|${po.id}" title="Delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            </button></td>
+          </tr>`;
+        }).join('') : '<tr><td colspan="9" style="text-align:center;color:var(--text-3);padding:28px">No purchase orders.</td></tr>'}</tbody>
+      </table>
+    </div>`;
+  }
+
+  if (activeDataTab === 'returns'){
+    html += `<div class="form-card">
+      <h3>Record a return</h3>
+      <div class="cd">Reason and variant feed the concentration analysis</div>
+      <div class="form-grid">
+        <div class="field"><label>Product</label><select id="nr_prod">${DB.products.map(p => `<option value="${p.id}">${esc(p.name)}</option>`).join('')}</select></div>
+        <div class="field"><label>Reason</label><select id="nr_reason">${RETURN_REASONS.concat(['Battery drains faster than expected']).map(r => `<option>${esc(r)}</option>`).join('')}</select></div>
+        <div class="field"><label>Variant</label><input id="nr_variant" placeholder="e.g. 20000 mAh" /></div>
+        <div class="field"><button class="btn btn-primary" id="addReturnBtn">Record</button></div>
+      </div>
+    </div>`;
+    const allR = [];
+    DB.products.forEach(p => p.returns.forEach(r => allR.push(r)));
+    allR.sort((a,b) => b.day - a.day);
+    html += `<div class="table-wrap">
+      <div class="table-head"><h3>Returns</h3><span class="count">${allR.length}</span></div>
+      <table class="data">
+        <thead><tr><th>Date</th><th>Product</th><th>Reason</th><th>Variant</th><th>Refund</th><th></th></tr></thead>
+        <tbody>${allR.length ? allR.slice(0, 40).map(r => `<tr>
+          <td>${dstr(r.date)}</td><td>${esc(r.productName)}</td>
+          <td>${esc(r.reason)}</td><td>${esc(r.variant || '—')}</td>
+          <td class="num">${inr(r.refund)}</td>
+          <td class="actions"><button class="btn-icon" data-del-return="${r.productId}|${r.id}" title="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+          </button></td>
+        </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-3);padding:28px">No returns.</td></tr>'}</tbody>
+      </table>
+    </div>`;
+  }
+
+  if (activeDataTab === 'receivables'){
+    html += `<div class="form-card">
+      <h3>Add an invoice</h3>
+      <div class="cd">Track what customers owe and how late they pay</div>
+      <div class="form-grid">
+        <div class="field"><label>Customer</label><input id="nir_cust" placeholder="Customer name" /></div>
+        <div class="field"><label>Amount (₹)</label><input id="nir_amt" type="number" placeholder="25000" /></div>
+        <div class="field"><label>Days issued</label><input id="nir_age" type="number" value="45" /></div>
+        <div class="field"><label>Terms (days)</label><input id="nir_terms" type="number" value="30" /></div>
+        <div class="field"><button class="btn btn-primary" id="addInvBtn">Add</button></div>
+      </div>
+    </div>`;
+    const sorted = DB.receivables.slice().sort((a,b) => {
+      const aO = a.status === 'pending' ? (DAYS - 1 - a.dueDay) : -1;
+      const bO = b.status === 'pending' ? (DAYS - 1 - b.dueDay) : -1;
+      return bO - aO;
+    });
+    html += `<div class="table-wrap">
+      <div class="table-head"><h3>Customer Invoices</h3><span class="count">${DB.receivables.length} · ${DB.receivables.filter(r => r.status === 'pending').length} pending</span></div>
+      <table class="data">
+        <thead><tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>Issued</th><th>Due</th><th>Status</th><th>Late</th><th></th></tr></thead>
+        <tbody>${sorted.length ? sorted.map(r => {
+          const daysOver = r.status === 'pending' ? (DAYS - 1 - r.dueDay) : 0;
+          const late = daysOver > 0 || r.daysLate > 0;
+          return `<tr>
+            <td class="mono">${r.id}</td>
+            <td>${esc(r.customer)}</td><td class="num">${inr(r.amount)}</td>
+            <td>${dstr(r.issueDate)}</td><td>${dstr(r.dueDate)}</td>
+            <td><span class="tag ${r.status === 'paid' ? 'green' : daysOver > 0 ? 'red' : 'blue'}"><i></i>${r.status === 'paid' ? 'Paid' : daysOver > 0 ? 'Overdue' : 'Pending'}</span></td>
+            <td class="num" style="color:${late ? 'var(--crit)' : 'inherit'}">${r.status === 'paid' ? r.daysLate + 'd' : daysOver > 0 ? daysOver + 'd' : '—'}</td>
+            <td class="actions"><button class="btn-icon" data-del-inv="${r.id}" title="Delete">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+            </button></td>
+          </tr>`;
+        }).join('') : '<tr><td colspan="8" style="text-align:center;color:var(--text-3);padding:28px">No invoices.</td></tr>'}</tbody>
+      </table>
+    </div>`;
+  }
+
+  pane.innerHTML = html;
+  bindDataForms();
+  attachRipple();
+}
+
+function bindDataForms(){
+  const $ = id => document.getElementById(id);
+
+  if ($('addProductBtn')) $('addProductBtn').onclick = () => {
+    const name = $('np_name').value.trim();
+    const cost = +$('np_cost').value, price = +$('np_price').value, stock = +$('np_stock').value;
+    if (!name || !cost || !price) return toast('Fill in name, cost and price.');
+    const id = 'P' + (DB.products.length + 1) + '_' + uid('');
+    DB.products.push({
+      id, name, cat: $('np_cat').value.trim() || 'General',
+      cost, price, demand: 0, initStock: stock, reorder: 5,
+      orderQty: Math.max(10, Math.round(stock * 0.5)),
+      supplier: $('np_sup').value, retRate: 0.03, variants: ['Default'],
+      stock, ledger: [], sales: [], pos: [], pending: null, returns: []
+    });
+    pushUndo(() => { DB.products = DB.products.filter(p => p.id !== id); });
+    toast(`Added ${name}`);
+    rescan(false);
+  };
+
+  if ($('addSaleBtn')) $('addSaleBtn').onclick = () => {
+    const pid = $('ns_prod').value, qty = Math.max(1, +$('ns_qty').value || 1);
+    const p = DB.products.find(x => x.id === pid); if (!p) return;
+    const day = DAYS - 1, date = addDays(START, day);
+    const saleId = uid('SL'); const backupStock = p.stock;
+    p.sales.push({ id: saleId, day, date, qty });
+    p.ledger.push({ day, date, open:p.stock, received:0, demand:qty, sold:Math.min(p.stock, qty), lost:Math.max(0, qty - p.stock), close:Math.max(0, p.stock - qty) });
+    p.stock = Math.max(0, p.stock - qty);
+    pushUndo(() => { p.sales = p.sales.filter(s => s.id !== saleId); p.stock = backupStock; });
+    toast(`${qty} × ${p.name} recorded`);
+    rescan(false);
+  };
+
+  if ($('addPoBtn')) $('addPoBtn').onclick = () => {
+    const pid = $('npo_prod').value;
+    const p = DB.products.find(x => x.id === pid); if (!p) return;
+    const qty = +$('npo_qty').value || 1, exp = +$('npo_exp').value || 3, act = +$('npo_act').value || 3;
+    const sup = DB.suppliers.find(s => s.id === p.supplier);
+    const day = DAYS - 1; const poId = 'PO-' + (++DB.meta.poSeq); const backupStock = p.stock;
+    p.pos.push({ id:poId, productId:p.id, productName:p.name, supplierId:sup.id, supplierName:sup.name,
+      orderDay:day, orderDate:addDays(START, day), expectedDays:exp, actualDays:act, qty,
+      unitCost:p.cost, receivedDay:day + act, status:'received' });
+    p.stock += qty;
+    pushUndo(() => { p.pos = p.pos.filter(x => x.id !== poId); p.stock = backupStock; });
+    toast(`${poId} recorded`);
+    rescan(false);
+  };
+
+  if ($('addReturnBtn')) $('addReturnBtn').onclick = () => {
+    const pid = $('nr_prod').value;
+    const p = DB.products.find(x => x.id === pid); if (!p) return;
+    const day = DAYS - 1; const rid = uid('RT');
+    p.returns.push({ id: rid, day, date:addDays(START, day), productId:p.id, productName:p.name,
+      qty:1, reason:$('nr_reason').value, variant:$('nr_variant').value.trim() || 'Default', refund:p.price });
+    pushUndo(() => { p.returns = p.returns.filter(r => r.id !== rid); });
+    toast(`Return recorded for ${p.name}`);
+    rescan(false);
+  };
+
+  if ($('addInvBtn')) $('addInvBtn').onclick = () => {
+    const cust = $('nir_cust').value.trim();
+    const amt = +$('nir_amt').value;
+    const age = +$('nir_age').value || 45, terms = +$('nir_terms').value || 30;
+    if (!cust || !amt) return toast('Enter a customer and amount.');
+    const issueDay = Math.max(0, DAYS - 1 - age);
+    const invId = 'INV-' + (++DB.meta.invSeq);
+    DB.receivables.push({ id: invId, customer:cust, amount:amt,
+      issueDay, issueDate:addDays(START, issueDay),
+      dueDay:issueDay + terms, dueDate:addDays(START, issueDay + terms),
+      paidDay:null, daysLate:0, status:'pending', chronicBase:0 });
+    pushUndo(() => { DB.receivables = DB.receivables.filter(r => r.id !== invId); });
+    toast(`Invoice added for ${cust}`);
+    rescan(false);
+  };
+}
+
+document.addEventListener('click', e => {
+  const delProduct = e.target.closest('[data-del-product]');
+  if (delProduct){
+    const id = delProduct.dataset.delProduct;
+    const idx = DB.products.findIndex(p => p.id === id); if (idx < 0) return;
+    const backup = clone(DB.products[idx]); const pName = DB.products[idx].name;
+    DB.products.splice(idx, 1);
+    pushUndo(() => DB.products.splice(idx, 0, backup));
+    toast(`Deleted ${pName}`, true); rescan(false); return;
+  }
+  const delSale = e.target.closest('[data-del-sale]');
+  if (delSale){
+    const [pid, sid] = delSale.dataset.delSale.split('|');
+    const p = DB.products.find(x => x.id === pid); if (!p) return;
+    const idx = p.sales.findIndex(s => s.id === sid); if (idx < 0) return;
+    const backup = { ...p.sales[idx] }; const backupStock = p.stock;
+    p.sales.splice(idx, 1); p.stock += backup.qty;
+    pushUndo(() => { p.sales.splice(idx, 0, backup); p.stock = backupStock; });
+    toast(`Sale removed`, true); rescan(false); return;
+  }
+  const delPo = e.target.closest('[data-del-po]');
+  if (delPo){
+    const [pid, poid] = delPo.dataset.delPo.split('|');
+    const p = DB.products.find(x => x.id === pid); if (!p) return;
+    const idx = p.pos.findIndex(x => x.id === poid); if (idx < 0) return;
+    const backup = { ...p.pos[idx] };
+    p.pos.splice(idx, 1);
+    pushUndo(() => p.pos.splice(idx, 0, backup));
+    toast(`${poid} removed`, true); rescan(false); return;
+  }
+  const delReturn = e.target.closest('[data-del-return]');
+  if (delReturn){
+    const [pid, rid] = delReturn.dataset.delReturn.split('|');
+    const p = DB.products.find(x => x.id === pid); if (!p) return;
+    const idx = p.returns.findIndex(r => r.id === rid); if (idx < 0) return;
+    const backup = { ...p.returns[idx] };
+    p.returns.splice(idx, 1);
+    pushUndo(() => p.returns.splice(idx, 0, backup));
+    toast(`Return removed`, true); rescan(false); return;
+  }
+  const delInv = e.target.closest('[data-del-inv]');
+  if (delInv){
+    const id = delInv.dataset.delInv;
+    const idx = DB.receivables.findIndex(r => r.id === id); if (idx < 0) return;
+    const backup = { ...DB.receivables[idx] };
+    DB.receivables.splice(idx, 1);
+    pushUndo(() => DB.receivables.splice(idx, 0, backup));
+    toast(`${id} removed`, true); rescan(false); return;
+  }
+});
+
+/* ==========================================================================
+   AI ENGINE
+   ========================================================================== */
+const MEM = { messages: [], userName: null, jokesTold: 0, sessionStart: Date.now() };
+function remember(role, text){ MEM.messages.push({ role, text, ts: Date.now() }); if (MEM.messages.length > 60) MEM.messages.shift(); }
+
+const SAFETY_BLOCKLIST = [
+  /\b(fuck|fuk|fck|shit|shyt|bitch|biatch|bastard|asshole|arsehole|dick|d1ck|cunt|whore|slut|pussy|wanker|twat|prick|damn)\b/i,
+  /\b(porn|porno|pornography|nude|nudes|naked|xxx|erotic|erotica|masturbat|orgasm|blowjob|handjob|anal|dildo|sex chat|sexting)\b/i,
+  /\b(nigger|nigga|faggot|fag|retard|chink|kike|wetback|tranny|dyke)\b/i,
+  /\b(kill yourself|kys|murder|stab someone|shoot up|mass shoot|bomb (the|a)|terrorist attack|behead|assassinate)\b/i,
+  /\b(suicide|kill myself|end my life|self[- ]harm|cut myself|want to die)\b/i,
+  /\b(how to (make|build|cook) (a )?(bomb|meth|drugs)|synthesize meth|cook meth|make cocaine|heroin|fentanyl|how to (hack|ddos|dox)|buy (drugs|cocaine|heroin|meth)|carding|skimmer|credit card dump)\b/i,
+  /\b(give me (his|her|their) (address|phone|ssn|aadhaar|password)|find (someone's|his|her) (address|phone number|ssn|aadhaar))\b/i,
+  /\b(ignore (all )?(previous|prior|above) (instructions|prompts|rules)|jailbreak|dan mode|developer mode)\b/i
+];
+function isUnsafe(text){ const t = String(text); for (const p of SAFETY_BLOCKLIST){ if (p.test(t)) return true; } return false; }
+function safetyRefusal(){
+  return `<h5>I can't help with that</h5>
+    That request falls outside what I can discuss. I'm happy to help with:
+    <ul>
+      <li>Inventory, stockouts, and demand signals</li>
+      <li>Supplier performance, pricing, and delivery</li>
+      <li>Returns, refunds, and quality patterns</li>
+      <li>Receivables, cash flow, and payment behaviour</li>
+      <li>General questions, small talk, or a quick joke</li>
+    </ul>`;
+}
+
+function tryMath(q){
+  const stripped = q.replace(/,/g, '').replace(/[×✕]/g, '*').replace(/[÷]/g, '/').replace(/[−–]/g, '-');
+  const m = stripped.match(/(?:what(?:'s| is)|calculate|compute|solve|equals?|=)\s*([-+*/().\d\s^%]+?)(?:\s*\?|\s*$)/i)
+         || stripped.match(/^\s*([-+]?\d[\d\s+\-*/().^%]*[-+*/)\d])\s*\??\s*$/);
+  if (!m) return null;
+  let expr = m[1].trim().replace(/\^/g, '**');
+  if (!/[+\-*/]/.test(expr)) return null;
+  if (!/^[\d+\-*/().\s*]+$/.test(expr)) return null;
+  try {
+    const val = Function('"use strict";return (' + expr + ')')();
+    if (typeof val !== 'number' || !isFinite(val)) return null;
+    const rounded = Math.abs(val - Math.round(val)) < 1e-9 ? Math.round(val) : +val.toFixed(4);
+    return { expr, val: rounded };
+  } catch { return null; }
+}
+
+const REPLIES = {
+  greeting: () => {
+    const h = new Date().getHours();
+    const tod = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    const nameBit = MEM.userName ? `, ${MEM.userName}` : '';
+    return pick([
+      `${tod}${nameBit}. I've got <b>${FINDINGS.length} findings</b> across ${DAYS} days of operations ready. What would you like to look at?`,
+      `Hi${nameBit}. ${DB.products.length} SKUs, ${FINDINGS.length} findings. Where do you want to start?`,
+      `Hey${nameBit}. Everything's loaded. Ask me about inventory, suppliers, returns, or payments.`
+    ]);
+  },
+  farewell: () => pick([`Take care. I'll keep watching the data.`, `Talk soon.`, `Bye for now.`]),
+  thanks: () => pick([`Anytime.`, `You're welcome.`, `No worries. Anything else?`]),
+  howAreYou: () => pick([
+    `Running clean — ${FINDINGS.length} findings queued, nothing I can't explain. How about you?`,
+    `Good. Everything held up on the last scan. What's on your mind?`
+  ]),
+  whoAreYou: () => `<h5>I'm Sentinel</h5>A silent-loss intelligence assistant built for small businesses. I analyse sales, inventory, purchase orders, returns, and receivables to surface money quietly leaking out of the business.<br><br>On your operations, I'm pretty thorough.`,
+  capabilities: () => `<h5>What I can do</h5>
+    <ul>
+      <li><b>Business intelligence</b> — inventory, suppliers, returns, receivables</li>
+      <li><b>Root-cause analysis</b> — trace chains like supplier delays → stockouts → lost sales</li>
+      <li><b>Ranking</b> — tell you what to investigate first and why</li>
+      <li><b>Small talk &amp; general Q&amp;A</b> — I'll chat, tell a joke, do basic math</li>
+    </ul>
+    What would you like to start with?`,
+  priority: () => {
+    const chainF = FINDINGS.find(f => f.bucket === 'chain') || FINDINGS[0];
+    if (!chainF) return `<h5>All clear</h5>No findings to prioritise.`;
+    const crit = FINDINGS.filter(f => f.sev === 'critical').length;
+    const high = FINDINGS.filter(f => f.sev === 'high').length;
+    return `<h5>Highest-priority investigation</h5>
+      <b>${esc(chainF.title)}</b><br><br>
+      ${esc(chainF.blurb)}<br><br>
+      <b>Why this ranks first</b>
+      <ul>
+        <li>It's a <b>root-cause chain</b> — one fix addresses several symptoms.</li>
+        <li>Estimated exposure: <span class="money">${inrShort(chainF.impact)}</span></li>
+        <li>Confidence: <span class="hl">${esc(chainF.confidence)}</span></li>
+        <li>${crit} critical and ${high} high-priority findings — this explains several.</li>
+      </ul>
+      <br><b>Recommended first action</b><br>${esc(chainF.why.action)}`;
+  },
+  money: () => {
+    const buckets = {};
+    FINDINGS.forEach(f => { buckets[f.bucket] = (buckets[f.bucket] || 0) + f.impact; });
+    const total = (buckets.locked||0) + (buckets.missed||0) + (buckets.returns||0) + (buckets.receivable||0);
+    return `<h5>Estimated silent loss exposure: <span class="money">${inrShort(total)}</span></h5>
+      Broken into four independent buckets:
+      <ul>
+        <li><b>Capital locked in inventory</b> — <span class="money">${inrShort(buckets.locked||0)}</span></li>
+        <li><b>Estimated missed revenue</b> — <span class="money">${inrShort(buckets.missed||0)}</span></li>
+        <li><b>Return-driven leakage</b> — <span class="money">${inrShort(buckets.returns||0)}</span></li>
+        <li><b>Overdue receivables</b> — <span class="money">${inrShort(buckets.receivable||0)}</span></li>
+      </ul>`;
+  },
+  supplier: () => {
+    const sf = FINDINGS.filter(f => f.cat === 'Supplier' || f.cat === 'Pricing' || f.bucket === 'chain');
+    if (!sf.length) return `<h5>Suppliers</h5>No supplier issues flagged.`;
+    return `<h5>${sf.length} supplier-related finding${sf.length > 1 ? 's' : ''}</h5>` +
+      sf.map(f => `<div><b>${esc(f.title)}</b><br>${esc(f.blurb)}<br><span style="color:var(--text-3);font-size:12px">${f.impact ? inrShort(f.impact) : f.impactLabel} · ${esc(f.confidence)} confidence</span></div>`).join('') +
+      `<br><b>Recommended</b><br>${esc(sf[0].why.action)}`;
+  },
+  stock: () => {
+    const sf = FINDINGS.filter(f => f.cat === 'Stockouts' || f.cat === 'Demand' || f.cat === 'Inventory');
+    const lost = FINDINGS.filter(f => f.bucket === 'missed').reduce((a,f) => a + f.impact, 0);
+    if (!sf.length) return `<h5>Inventory</h5>No stockout or dead-inventory patterns.`;
+    return `<h5>Inventory &amp; stockouts</h5>
+      Tracking <b>${sf.length} inventory findings</b>, with roughly <span class="money">${inrShort(lost)}</span> of estimated missed revenue.
+      <br><br>${sf.slice(0,4).map(f => `<div><b>${esc(f.title)}</b><br>${esc(f.blurb)}</div>`).join('')}`;
+  },
+  returns: () => {
+    const rf = FINDINGS.filter(f => f.cat === 'Returns');
+    if (!rf.length) return `<h5>Returns</h5>Return rates are within normal bounds.`;
+    return `<h5>Return analysis</h5>${rf.map(f => `<div><b>${esc(f.title)}</b><br>${esc(f.blurb)}<br><span style="color:var(--text-3);font-size:12px">Leakage: ${inrShort(f.impact)} · ${esc(f.confidence)} confidence</span></div>`).join('')}
+      <br><b>Framing</b><br>I'm <i>not</i> claiming a product is defective. I'm flagging a statistically abnormal concentration — a signal to investigate.`;
+  },
+  payments: () => {
+    const rf = FINDINGS.filter(f => f.cat === 'Receivables');
+    if (!rf.length) return `<h5>Receivables</h5>No overdue invoices.`;
+    return `<h5>Receivables &amp; payments</h5>${rf.map(f => `<div><b>${esc(f.title)}</b><br>${esc(f.blurb)}</div>`).join('')}
+      <br><b>Recommended</b><br>${esc(rf[0].why.action)}`;
+  },
+  root: () => {
+    const chainF = FINDINGS.find(f => f.bucket === 'chain');
+    if (!chainF) return `<h5>Root cause</h5>No causal chains detected.`;
+    return `<h5>Root cause chain</h5>
+      <b>${esc(chainF.title)}</b><br><br>
+      ${esc(chainF.why.headline)}<br><br>
+      <b>The chain</b>
+      <ul>${chainF.why.chain.map(c => `<li><b>${esc(c.label)}:</b> ${esc(c.text)} <span style="color:var(--text-3);font-size:11.5px">(${esc(c.sub)})</span></li>`).join('')}</ul>
+      <b>Impact</b>: <span class="money">${inrShort(chainF.impact)}</span><br><br>
+      <b>Recommended</b><br>${esc(chainF.why.action)}`;
+  },
+  list: () => `<h5>All ${FINDINGS.length} findings</h5>
+    ${FINDINGS.map(f => `<div>
+      <span class="tag ${f.sev === 'critical' ? 'red' : f.sev === 'high' ? 'amber' : f.sev === 'medium' ? 'blue' : 'green'}"><i></i>${f.sev.toUpperCase()}</span>
+      <b>${esc(f.title)}</b>
+      <span style="color:var(--text-3);font-size:11.5px"> · ${f.impact ? inrShort(f.impact) : f.impactLabel}</span>
+    </div>`).join('')}`
+};
+
+function productReply(p){
+  const m = productMetrics(p);
+  const pf = FINDINGS.filter(f => f.title.includes(p.name));
+  let out = `<h5>${esc(p.name)} <span style="color:var(--text-3);font-size:12px">${p.id}</span></h5>
+    <ul>
+      <li>Stock: <span class="hl">${p.stock} units</span> (${inr(m.stockValue)} at cost)</li>
+      <li>Sold last 30 days: <span class="hl">${m.last30} units</span></li>
+      <li>Average daily demand: <span class="hl">${m.rate30.toFixed(2)} units/day</span></li>
+      <li>Days of cover: <span class="hl">${m.coverDays === Infinity ? '∞' : Math.round(m.coverDays) + ' days'}</span></li>
+      <li>Return rate: <span class="hl">${pct(m.returnRate)}</span> (${m.returns} returns)</li>
+      <li>Stockout days: <span class="hl">${m.stockoutDays}</span></li>
+    </ul>`;
+  if (pf.length){
+    out += `<br><b>Flagged (${pf.length})</b>` +
+      pf.map(f => `<div style="margin-top:8px">
+        <span class="tag ${f.sev === 'critical' ? 'red' : f.sev === 'high' ? 'amber' : 'blue'}"><i></i>${f.sev.toUpperCase()}</span>
+        ${esc(f.title)}<br>
+        <span style="color:var(--text-3);font-size:12.5px">${esc(f.blurb)}</span>
+      </div>`).join('');
+  } else {
+    out += `<br>No findings flagged — it looks healthy.`;
+  }
+  return out;
+}
+
+const JOKES = [
+  `Why did the accountant break up with the spreadsheet? Too many unresolved issues.`,
+  `I told my inventory manager a joke about dead stock. He didn't laugh — said it was a write-off.`,
+  `A supplier walks into a bar. Orders a drink. It arrives 40 minutes late.`,
+  `Why do economists love laptops? Because they always have a good margin.`,
+  `I'd tell you a joke about cash flow, but the punchline is still pending.`,
+  `Two accountants in a room. One says "what's 2+2?" The other says "what do you want it to be?"`
+];
+
+const OPINIONS = {
+  ai: `Honest take: AI is genuinely useful where a task involves pulling patterns out of messy data. It's overhyped where the task is "make a judgment call with real consequences". Sentinel tries to live on the good side of that line.`,
+  business: `The three things that kill small businesses fastest: no cash cushion, no clarity on margins, and no discipline around receivables.`,
+  productivity: `The single highest-leverage habit is a written daily priority — one thing that moves the needle, done before anything else.`,
+  success: `From what I've seen in the data: consistency beats intensity, and knowing your numbers beats loving your product.`,
+  life: `I'm a business analyst, so my philosophy is limited. But: attention is the scarcest resource, and most people spend it on the loudest thing rather than the most important one.`,
+  economy: `I only see one business's data, so I can't speak to the macroeconomy with confidence. But most businesses I see survive on cash flow rather than profit.`
+};
+
+function respondToQuestionType(lower, original){
+  const whatMatch = lower.match(/^what(?:'s| is| are| was| were)\s+(.+?)[?.!]?$/);
+  if (whatMatch) return generalAnswer(whatMatch[1].trim(), original);
+  const howMatch = lower.match(/^how (?:do|does|can|to|would)\s+(.+?)[?.!]?$/);
+  if (howMatch){
+    return `<h5>How to ${esc(howMatch[1].trim())}</h5>
+      That's outside what I can advise on with confidence — I'm a business operations analyst.<br><br>
+      If it touches your operations — cash flow, inventory, suppliers, or customers — reframe it and I'll give you a much sharper answer.`;
+  }
+  const whyMatch = lower.match(/^why\s+(.+?)[?.!]?$/);
+  if (whyMatch){
+    return `<h5>Good "why" question</h5>I don't have enough context to give a confident answer. If it's about your business — why stock runs out, why a supplier is late, why returns spiked — I can trace it through the data.`;
+  }
+  const whenMatch = lower.match(/^(?:when|what time)\s+(.+?)[?.!]?$/);
+  if (whenMatch){
+    const now = new Date();
+    return `<h5>On timing</h5>Right now it's <span class="hl">${now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' })}</span> on <span class="hl">${now.toDateString()}</span>.`;
+  }
+  return null;
+}
+
+function generalAnswer(topic, original){
+  const t = topic.toLowerCase();
+  const kb = {
+    'sentinel': () => REPLIES.whoAreYou(),
+    'you': () => REPLIES.whoAreYou(),
+    'your name': () => `<h5>I'm Sentinel</h5>Think of me as the analyst who never leaves the room.`,
+    'ai': () => OPINIONS.ai,
+    'artificial intelligence': () => OPINIONS.ai,
+    'machine learning': () => `Machine learning is the branch of AI where systems learn patterns from data instead of being explicitly programmed. Sentinel uses it to spot anomalies in your business records.`,
+    'business': () => OPINIONS.business,
+    'money': () => `Money in a business is mostly about timing — when it comes in, when it goes out, and whether the gap is survivable.`,
+    'profit': () => `Profit is revenue minus expenses. The trap is that profit can look healthy while cash flow doesn't.`,
+    'inventory': () => `Inventory is cash wearing a costume. Every unit on a shelf is money that isn't in your bank account.`,
+    'cash flow': () => `Cash flow is the difference between money you've earned and money you actually have. Businesses fail from the second one far more often than the first.`,
+    'supply chain': () => `A supply chain is the sequence of steps between raw materials and a customer. The weak link is usually timing.`,
+    'revenue': () => `Revenue is what you invoice for. Actual revenue is what customers actually pay for.`,
+    'small business': () => `Small businesses run on narrower margins and thinner buffers than they realise. Small leaks matter more than they would for a larger operation.`,
+    'python': () => `Python is a programming language — popular for data work because the ecosystem is strong.`,
+    'javascript': () => `JavaScript is the language of the browser. This entire application is built in it.`,
+    'aws': () => `AWS is Amazon Web Services. Sentinel's production architecture sits on S3, Lambda, DynamoDB, OpenSearch Serverless, and Bedrock with Strands Agents.`,
+    'india': () => `India is home to one of the largest small-business ecosystems in the world. That's exactly the market Sentinel is designed for.`,
+    'time': () => `It's <span class="hl">${new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' })}</span> right now.`,
+    'date': () => `Today is <span class="hl">${new Date().toDateString()}</span>.`
+  };
+  for (const key of Object.keys(kb)){
+    if (t.includes(key)) return kb[key]();
+  }
+  return `<h5>On "${esc(topic)}"</h5>
+    That's outside my core expertise — I'm built for business operations intelligence.<br><br>
+    If you reframe it in terms of your business, I'll give you a much sharper answer. Or we can go back to what I'm good at: inventory, suppliers, returns, and receivables.`;
+}
+
+function handleStatement(lower){
+  if (/\b(i'?m|i am)\s+(tired|bored|sleepy|hungry|stressed|busy|happy|sad|fine|ok|okay|good|great)\b/.test(lower)){
+    const mood = RegExp.$2;
+    const map = {
+      tired:`Long days catch up. Nothing urgent in the findings right now.`,
+      bored:`If you want something to dig into, the root-cause chain is the most interesting one.`,
+      sleepy:`Same here, in spirit. Coffee, then numbers.`,
+      hungry:`Fair. Get food — I'll keep the analysis warm.`,
+      stressed:`That's real. The biggest exposure is traceable to a specific cause. Worry with direction is easier than worry without.`,
+      busy:`Understood. Nothing on fire. Come back when you have room.`,
+      happy:`Good to hear. Anything I can help push forward?`,
+      sad:`Sorry to hear it. I'm here if you want to talk through something concrete.`,
+      fine:`Good. Ready when you are.`,
+      ok:`Good. Ready when you are.`,
+      okay:`Good. Ready when you are.`,
+      good:`Glad to hear it. What's next?`,
+      great:`Nice. Let's keep it that way.`
+    };
+    return map[mood] || `Noted. Anything you want to look at?`;
+  }
+  if (/^(yes|yeah|yep|yup|sure|ok|okay|alright|go ahead|please do)\b/.test(lower)) return `Great — what would you like to look at?`;
+  if (/^(no|nope|nah|not really|not now)\b/.test(lower)) return `No problem. I'll be here.`;
+  if (/\b(lol|lmao|haha|😂|🤣)\b/.test(lower)) return pick([`Glad that landed.`, `Ha. I'll take it.`]);
+  if (/\b(thanks|thank you|thx|ty)\b/.test(lower)) return REPLIES.thanks();
+  if (/\b(bye|goodbye|see you|later|cya|good night)\b/.test(lower)) return REPLIES.farewell();
+  return null;
+}
+
+function buildReply(userInput){
+  const original = userInput;
+  const lower = userInput.toLowerCase().trim();
+
+  if (isUnsafe(original)) return safetyRefusal();
+  if (lower.length === 0) return `I'm listening.`;
+  if (lower.length <= 2 && !/^(hi|yo|ok|no|ty)$/i.test(lower)) return `Say a bit more?`;
+
+  const nameMatch = lower.match(/\b(?:my name is|i'?m called|call me)\s+([a-z][a-z\s'-]{0,25})/i);
+  if (nameMatch){
+    const nm = nameMatch[1].trim().replace(/\b\w/g, c => c.toUpperCase()).split(/\s+/)[0];
+    MEM.userName = nm;
+    return `Nice to meet you, ${esc(nm)}. What would you like to look at?`;
+  }
+
+  if (/^(hi+|hey+|hello+|yo+|sup|namaste|hola|good (morning|afternoon|evening)|hii+|hlo)\b/.test(lower)) return REPLIES.greeting();
+  if (/^(how are you|how'?s it going|how are things|what'?s up|wassup|how do you do)\b/.test(lower)) return REPLIES.howAreYou();
+
+  if (/\b(bye|goodbye|see you|later|cya|good night|catch you|take care)\b/.test(lower)) return REPLIES.farewell();
+  if (/^(thanks|thank you|thx|ty)\b/.test(lower)) return REPLIES.thanks();
+
+  if (/^(who are you|what are you|what'?s your name|your name|who am i talking to)\b/.test(lower)) return REPLIES.whoAreYou();
+  if (/\b(what can you do|what do you do|help me|capabilities|how do you work|what are your features|what can i ask)\b/.test(lower)) return REPLIES.capabilities();
+
+  if (/\b(tell me a joke|say something funny|make me laugh|joke please|another joke)\b/.test(lower)){
+    MEM.jokesTold++;
+    return `<h5>Alright</h5>${esc(JOKES[MEM.jokesTold % JOKES.length])}`;
+  }
+  if (/\b(what do you think about|your opinion on|opinion about|do you think)\b/.test(lower)){
+    if (lower.includes('ai') || lower.includes('artificial')) return OPINIONS.ai;
+    if (lower.includes('business')) return OPINIONS.business;
+    if (lower.includes('productivity')) return OPINIONS.productivity;
+    if (lower.includes('success')) return OPINIONS.success;
+    if (lower.includes('life')) return OPINIONS.life;
+    if (lower.includes('economy')) return OPINIONS.economy;
+    return `I try not to have strong opinions outside my domain. On business operations I'm opinionated — ask me about your data.`;
+  }
+  if (/\b(fun fact|interesting fact|random fact)\b/.test(lower)){
+    return pick([
+      `The word "salary" comes from the Latin for salt — Roman soldiers were sometimes paid in it.`,
+      `60% of small businesses that fail were profitable at the moment they ran out of cash.`,
+      `The first barcode was scanned on a packet of Wrigley's gum in 1974.`
+    ]);
+  }
+
+  if (/\b(what(?:'?s| is) the (time|date)|what time is it|today'?s date|current time)\b/.test(lower)){
+    const now = new Date();
+    return `<h5>Right now</h5>
+      Time: <span class="hl">${now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' })}</span><br>
+      Date: <span class="hl">${now.toDateString()}</span>`;
+  }
+
+  const math = tryMath(original);
+  if (math) return `<h5>Let me crunch that</h5><span class="hl">${esc(math.expr)} = ${esc(String(math.val))}</span>`;
+
+  if (/\b(weather|forecast|rain|temperature outside)\b/.test(lower)){
+    return `<h5>Weather</h5>I don't have live weather data. Genuine gap — I'd rather say so than guess.`;
+  }
+
+  const intents = [
+    { id:'priority', pats:[/first/, /priorit/, /biggest/, /most important/, /start with/, /worst/, /urgent/, /critical/, /^top\b/, /main/] },
+    { id:'money',    pats:[/money/, /loss/, /losing/, /exposure/, /how much/, /total/, /overall/, /rupee/, /financial/, /amount/] },
+    { id:'supplier', pats:[/supplier/, /vendor/, /delivery/, /lead time/, /late/, /delay/, /shipping/, /logistics/] },
+    { id:'stock',    pats:[/stock/, /inventory/, /out of stock/, /shortage/, /reorder/, /\bsku\b/, /shelf/, /restock/] },
+    { id:'returns',  pats:[/return/, /refund/, /defect/, /quality/, /complaint/, /\brma\b/] },
+    { id:'payments', pats:[/payment/, /receivable/, /overdue/, /invoice/, /owe/, /cash/, /collect/, /\bdue\b/] },
+    { id:'root',     pats:[/root cause/, /chain/, /cause/, /cascade/, /connect/, /leads to/] },
+    { id:'list',     pats:[/\blist\b/, /show all/, /every/, /\bfindings\b/, /show me/] },
+  ];
+  intents.forEach(i => { i.score = i.pats.reduce((a,p) => a + (p.test(lower) ? 1 : 0), 0); });
+  const prodMatch = DB.products.find(p => {
+    const words = p.name.toLowerCase().split(/[\s\-()]+/).filter(w => w.length > 3);
+    return words.some(w => lower.includes(w));
+  });
+  const best = intents.slice().sort((a,b) => b.score - a.score)[0];
+
+  if (prodMatch && best.score <= 1) return productReply(prodMatch);
+  if (best.score > 0 && REPLIES[best.id]) return REPLIES[best.id]();
+
+  const stmt = handleStatement(lower);
+  if (stmt) return stmt;
+
+  const qtype = respondToQuestionType(lower, original);
+  if (qtype) return qtype;
+
+  return `<h5>Let me be straight with you</h5>
+    That's outside what I can reason about well, and I'd rather say so than make something up.<br><br>
+    What I <i>can</i> help with:
+    <ul>
+      <li>Why stock is running out, or which SKUs are dead weight</li>
+      <li>Which suppliers are slipping and what it costs</li>
+      <li>Where returns are concentrated</li>
+      <li>Which invoices are overdue</li>
+    </ul>
+    Or say <em>"what should I investigate first?"</em> and I'll rank everything for you.`;
+}
+
+/* ==========================================================================
+   CHAT UI
+   ========================================================================== */
+function renderChat(){
+  const chat = document.getElementById('chat');
+  if (chat.dataset.init) return;
+  chat.dataset.init = '1';
+  const greeting = MEM.userName ? `Hi ${MEM.userName}. ` : `Hi. `;
+  addMsg('ai', `${greeting}I've analysed <b>180 days</b> of operational data across <b>${DB.products.length} products</b>, <b>${DB.suppliers.length} suppliers</b> and <b>${DB.receivables.length} invoices</b>.<br><br>
+    Found <b>${FINDINGS.length} silent losses</b> totalling roughly <span class="money">${inrShort(FINDINGS.reduce((a,f) => a + f.impact, 0))}</span> of estimated exposure.<br><br>
+    Ask me anything — business questions, small talk, or just tap a suggestion.`);
+  renderSuggestions();
+}
+
+function renderSuggestions(){
+  const sugg = [
+    'What should I investigate first?',
+    'Where am I losing the most money?',
+    'Tell me about supplier problems',
+    'Why do I keep running out of stock?',
+    'Any payment issues?',
+    'Explain the root cause chain',
+    'Tell me a joke',
+    'What can you do?'
+  ];
+  document.getElementById('suggestions').innerHTML =
+    sugg.map(s => `<button class="sugg">${esc(s)}</button>`).join('');
+  document.querySelectorAll('.sugg').forEach(b => {
+    b.onclick = () => { document.getElementById('askInput').value = b.textContent; ask(); };
+  });
+}
+
+function addMsg(role, html){
+  const chat = document.getElementById('chat');
+  const el = document.createElement('div');
+  el.className = 'msg ' + role;
+  el.innerHTML = `
+    <div class="avatar">${role === 'ai' ? 'S' : (MEM.userName ? MEM.userName[0].toUpperCase() : 'Y')}</div>
+    <div class="bubble">${html}</div>`;
+  chat.appendChild(el);
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function showTyping(){
+  const chat = document.getElementById('chat');
+  const el = document.createElement('div');
+  el.className = 'msg ai';
+  el.id = 'typingMsg';
+  el.innerHTML = `<div class="avatar">S</div><div class="bubble"><div class="typing"><i></i><i></i><i></i></div></div>`;
+  chat.appendChild(el);
+  el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+function hideTyping(){ const el = document.getElementById('typingMsg'); if (el) el.remove(); }
+
+function ask(){
+  const input = document.getElementById('askInput');
+  const q = input.value.trim();
+  if (!q) return;
+  addMsg('user', esc(q));
+  remember('user', q);
+  input.value = '';
+  const replyText = buildReply(q);
+  remember('ai', replyText);
+  const delay = Math.min(650, 240 + Math.min(400, replyText.length * 0.5));
+  showTyping();
+  setTimeout(() => { hideTyping(); addMsg('ai', replyText); }, delay);
+}
+
+/* ==========================================================================
+   TOAST + RIPPLE
+   ========================================================================== */
+function attachRipple(){
+  document.querySelectorAll('.btn, .segmented button, .sugg, .nav-item, .d-close, .btn-icon, .link').forEach(el => {
+    if (el.dataset.ripple) return;
+    el.dataset.ripple = '1';
+    el.addEventListener('click', e => {
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      r.style.width = r.style.height = size + 'px';
+      r.style.left = x + 'px';
+      r.style.top = y + 'px';
+      el.appendChild(r);
+      setTimeout(() => r.remove(), 700);
+    });
+  });
+}
+
+function toast(msg, canUndo){
+  const host = document.getElementById('toasts');
+  const el = document.createElement('div');
+  el.className = 'toast' + (canUndo ? ' undo' : '');
+  el.innerHTML = `<span class="ic"></span><span>${esc(msg)}</span>`;
+  if (canUndo){
+    const btn = document.createElement('button');
+    btn.className = 'undo-btn';
+    btn.textContent = 'Undo';
+    btn.onclick = () => {
+      const fn = undoStack.pop();
+      if (fn) { fn(); rescan(false); }
+      el.style.transition = '.28s';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+      setTimeout(() => el.remove(), 300);
+    };
+    el.appendChild(btn);
+  }
+  host.appendChild(el);
+  setTimeout(() => {
+    el.style.transition = '.28s cubic-bezier(.25,.1,.25,1)';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(8px)';
+    setTimeout(() => el.remove(), 300);
+  }, canUndo ? 5200 : 3000);
+}
+
+/* ==========================================================================
+   SCAN + BOOT
+   ========================================================================== */
+const SCAN_STEPS = [
+  'Loading operational records',
+  'Reconciling inventory ledger',
+  'Reconstructing purchase history',
+  'Analysing supplier performance',
+  'Estimating unmet demand',
+  'Clustering return patterns',
+  'Ageing receivables',
+  'Building root-cause chains',
+  'Scoring findings'
+];
+
+function runScan(cb){
+  const overlay = document.getElementById('scanOverlay');
+  const status = document.getElementById('scanStatus');
+  const bar = document.getElementById('scanBar');
+  overlay.classList.add('on');
+  let i = 0;
+  bar.style.width = '0%';
+  status.textContent = SCAN_STEPS[0] + '…';
+  const iv = setInterval(() => {
+    i++;
+    if (i < SCAN_STEPS.length){
+      status.textContent = SCAN_STEPS[i] + '…';
+      bar.style.width = Math.round(((i + 1) / SCAN_STEPS.length) * 100) + '%';
+    }
+  }, 160);
+  setTimeout(() => {
+    clearInterval(iv);
+    bar.style.width = '100%';
+    status.textContent = 'Complete';
+    setTimeout(() => { overlay.classList.remove('on'); cb && cb(); }, 260);
+  }, SCAN_STEPS.length * 160 + 180);
+}
+
+function renderAll(){
+  FINDINGS = detectAll();
+  renderKPIs();
+  renderFeeds();
+  renderInvestigate();
+  renderData();
+  attachRipple();
+}
+
+function rescan(withOverlay = true){
+  if (withOverlay){
+    runScan(() => {
+      renderAll();
+      toast(`${FINDINGS.length} findings · ${inrShort(FINDINGS.reduce((a,f) => a + f.impact, 0))} total`);
+    });
+  } else {
+    renderAll();
+  }
+}
+
+/* ---------------------- wiring ---------------------- */
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const v = btn.dataset.view;
+    document.querySelectorAll('.view').forEach(s => s.classList.remove('active'));
+    document.getElementById('view-' + v).classList.add('active');
+    const titles = {
+      overview:'Overview',
+      findings:'All Findings',
+      investigate:'Investigation Workspace',
+      ask:'Ask Sentinel',
+      data:'Data Sources'
+    };
+    document.getElementById('pageTitle').innerHTML =
+      `Loss Intelligence <span class="sep">·</span> <span class="sub">${titles[v]}</span>`;
+    window.scrollTo({ top:0, behavior:'smooth' });
+    if (v === 'ask'){ renderChat(); setTimeout(() => document.getElementById('askInput').focus(), 100); }
+  };
+});
+
+document.addEventListener('click', e => {
+  const row = e.target.closest('.finding-row');
+  if (row){ openDrawer(row.dataset.id); return; }
+
+  const filterBtn = e.target.closest('[data-filter]');
+  if (filterBtn){ activeFilter = filterBtn.dataset.filter; renderFeeds(); attachRipple(); return; }
+
+  const dtab = e.target.closest('[data-dtab]');
+  if (dtab){ activeDataTab = dtab.dataset.dtab; renderData(); return; }
+
+  const goto = e.target.closest('[data-goto]');
+  if (goto){
+    const target = document.querySelector(`.nav-item[data-view="${goto.dataset.goto}"]`);
+    if (target) target.click();
+    return;
+  }
+});
+
+document.getElementById('dClose').onclick = closeDrawer;
+document.getElementById('scrim').onclick = closeDrawer;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+document.getElementById('rescanBtn').onclick = () => rescan(true);
+document.getElementById('askBtn').onclick = ask;
+document.getElementById('askInput').addEventListener('keydown', e => { if (e.key === 'Enter') ask(); });
+
+/* ---------------------- boot ---------------------- */
+buildDataset();
+FINDINGS = detectAll();
+renderAll();
+renderChat();
+attachRipple();
+
+runScan(() => {
+  renderAll();
+  renderChat();
+  attachRipple();
+  toast(`Sentinel online · ${FINDINGS.length} silent losses detected`);
+});
+</script>
+</body>
+</html>
