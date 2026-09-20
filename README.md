@@ -73,11 +73,58 @@ flowchart LR
     classDef loss fill:#3b1216,stroke:#ff453a,color:#ffffff
     class A,B,C,D step
     class E loss
+```
 
-Note: Inside this step, there is a mermaid code fence. If we wrap with ````markdown, the inner ``` will not break because we use four backticks. That's fine.
+> 💡 Every finding is a **lead to investigate, not a verdict**. Sentinel says so when a chain is based on timing alone.
 
-🖼️ Tour
-<table> <tr> <td width="50%" valign="top"> <b>📊 Dashboard</b><br/> Totals, ranked findings, one-click explanations.<br/><br/> <img src="docs/screenshots/02-dashboard-dark.jpg" alt="Dashboard in dark mode"> </td> <td width="50%" valign="top"> <b>🔍 Explain Why</b><br/> The reasoning, the evidence and the cause chain.<br/><br/> <img src="docs/screenshots/03-explain-drawer.jpg" alt="Explain why drawer"> </td> </tr> <tr> <td width="50%" valign="top"> <b>📉 Stockout Timeline</b><br/> Red bands (empty shelf) line up with amber dots (late delivery).<br/><br/> <img src="docs/screenshots/04-stockout-timeline.jpg" alt="Stockout timeline chart"> </td> <td width="50%" valign="top"> <b>☀️ Light Mode</b><br/> A professional light theme with the same liquid glass.<br/><br/> <img src="docs/screenshots/07-dashboard-light.jpg" alt="Dashboard in light mode"> </td> </tr> <tr> <td width="50%" valign="top"> <b>🗂️ Your Own Data</b><br/> Add, edit, import CSV, export a backup.<br/><br/> <img src="docs/screenshots/05-data-dark.jpg" alt="Data tab"> </td> <td width="50%" valign="top"> <b>💬 Assistant</b><br/> Ask about your losses, or anything else.<br/><br/> <img src="docs/screenshots/06-assistant-dark.jpg" alt="Assistant chat"> </td> </tr> </table><div align="center"> <img src="docs/screenshots/08-mobile-home.jpg" alt="Mobile home" width="250">&nbsp;&nbsp;&nbsp; <img src="docs/screenshots/09-mobile-dashboard.jpg" alt="Mobile dashboard" width="250"> <br/><sub><i>Fully responsive</i></sub> </div> ```
+---
+
+## 🖼️ Tour
+
+<table>
+<tr>
+<td width="50%" valign="top">
+<b>📊 Dashboard</b><br/>
+Totals, ranked findings, one-click explanations.<br/><br/>
+<img src="docs/screenshots/02-dashboard-dark.jpg" alt="Dashboard in dark mode">
+</td>
+<td width="50%" valign="top">
+<b>🔍 Explain Why</b><br/>
+The reasoning, the evidence and the cause chain.<br/><br/>
+<img src="docs/screenshots/03-explain-drawer.jpg" alt="Explain why drawer">
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<b>📉 Stockout Timeline</b><br/>
+Red bands (empty shelf) line up with amber dots (late delivery).<br/><br/>
+<img src="docs/screenshots/04-stockout-timeline.jpg" alt="Stockout timeline chart">
+</td>
+<td width="50%" valign="top">
+<b>☀️ Light Mode</b><br/>
+A professional light theme with the same liquid glass.<br/><br/>
+<img src="docs/screenshots/07-dashboard-light.jpg" alt="Dashboard in light mode">
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<b>🗂️ Your Own Data</b><br/>
+Add, edit, import CSV, export a backup.<br/><br/>
+<img src="docs/screenshots/05-data-dark.jpg" alt="Data tab">
+</td>
+<td width="50%" valign="top">
+<b>💬 Assistant</b><br/>
+Ask about your losses, or anything else.<br/><br/>
+<img src="docs/screenshots/06-assistant-dark.jpg" alt="Assistant chat">
+</td>
+</tr>
+</table>
+
+<div align="center">
+<img src="docs/screenshots/08-mobile-home.jpg" alt="Mobile home" width="250">&nbsp;&nbsp;&nbsp;
+<img src="docs/screenshots/09-mobile-dashboard.jpg" alt="Mobile dashboard" width="250">
+<br/><sub><i>Fully responsive</i></sub>
+</div>
 
 ---
 
@@ -107,6 +154,15 @@ flowchart LR
 
     classDef a fill:#10233d,stroke:#0a84ff,color:#ffffff
     class D,E,L,F,X,A a
+```
+
+<table>
+<tr><th align="center">Step</th><th align="left">What happens</th></tr>
+<tr><td align="center"><b>1️⃣</b></td><td><b>Bring your data.</b> Add records by hand or import CSVs.</td></tr>
+<tr><td align="center"><b>2️⃣</b></td><td><b>Sentinel investigates.</b> Deterministic detectors scan every table, so each number traces back to a record.</td></tr>
+<tr><td align="center"><b>3️⃣</b></td><td><b>It connects the dots.</b> Related events are chained into a likely root cause.</td></tr>
+<tr><td align="center"><b>4️⃣</b></td><td><b>You decide.</b> Each finding says what to check first. Nothing changes in your business unless you change it.</td></tr>
+</table>
 
 ---
 
@@ -118,29 +174,54 @@ flowchart LR
 git clone https://github.com/dhruvareddy20066-commits/Sentinell.git
 cd Sentinell
 ./scripts/serve.sh        # then open http://localhost:8080
+```
 
-🗂️ Bring Your Own Data
-Open Data → pick a table → use Add record or Import CSV.
+Or just **double-click** `web/index.html`.
+
+The app opens with a synthetic **electronics shop**.
+➡️ Go to **Dashboard** to see the findings.
+➡️ Go to **Data** to replace the demo with your own numbers.
+
+---
+
+## 🗂️ Bring Your Own Data
+
+Open **Data** → pick a table → use **Add record** or **Import CSV**.  
 The analysis updates the moment you save.
 
-<details> <summary><b>📄 CSV columns for each table</b> (click to expand)</summary>
-The first row must be a header. Columns match by key or label, ignoring case and punctuation.
-Suppliers and products can be referenced by name.
-Dates can be YYYY-MM-DD or DD/MM/YYYY.
+<details>
+<summary><b>📄 CSV columns for each table</b> (click to expand)</summary>
 
-Table	Columns (required in bold)
-Products	name, category, cost, price, stock, supplier
-Suppliers	name, promisedDays
-Deliveries	supplier, product, qty, unitCost, orderedDate, receivedDate (empty while in transit)
-Sales	date, product, qty
-Stockouts	product, start, days
-Returns	date, product, qty, variant, reason
-Payments	customer, invoice, amount, dueDate, paidDate (empty while unpaid)
-💡 Tip: Click Insert sample rows in the import dialog to see the exact format for each table.
+<br/>
+
+The first row must be a header. Columns match by key or label, **ignoring case and punctuation**.  
+Suppliers and products can be referenced **by name**.  
+Dates can be `YYYY-MM-DD` or `DD/MM/YYYY`.
+
+| Table | Columns (required in **bold**) |
+| --- | --- |
+| **Products** | **name**, category, **cost**, **price**, **stock**, supplier |
+| **Suppliers** | **name**, **promisedDays** |
+| **Deliveries** | **supplier**, **product**, **qty**, unitCost, **orderedDate**, receivedDate *(empty while in transit)* |
+| **Sales** | **date**, **product**, **qty** |
+| **Stockouts** | **product**, **start**, **days** |
+| **Returns** | **date**, **product**, **qty**, variant, reason |
+| **Payments** | **customer**, invoice, **amount**, **dueDate**, paidDate *(empty while unpaid)* |
+
+> 💡 **Tip:** Click **Insert sample rows** in the import dialog to see the exact format for each table.
 
 </details>
-Other data tools: edit any row by clicking it · undo a delete · export or import a JSON backup · reset to the demo shop · start blank.
 
+**Other data tools:** edit any row by clicking it · undo a delete · export or import a JSON backup · reset to the demo shop · start blank.
+
+---
+
+## 💬 The Assistant
+
+A streaming chatbot that has your **business data as context**.  
+Click the **sliders icon** (top right) to connect a model.
+
+```mermaid
 flowchart LR
     Q["❓ Your question"] --> K{"API key<br/>added?"}
     K -- Yes --> M["🤖 Claude, OpenAI-compatible,<br/>or Gemini<br/>answers anything, using your data"]
@@ -148,22 +229,42 @@ flowchart LR
 
     classDef a fill:#10233d,stroke:#0a84ff,color:#ffffff
     class Q,K,M,O a
+```
 
+| Provider | Default model | Notes |
+| --- | --- | --- |
+| **Anthropic Claude** | `claude-sonnet-5` | Called from the browser |
+| **OpenAI-compatible** | `gpt-4o-mini` | Set the base URL for OpenAI, OpenRouter, Groq, or `http://localhost:11434/v1` for Ollama *(no key needed)* |
+| **Google Gemini** | `gemini-2.5-flash` | |
 
-📐 The Detection Rules
-Everything lives in the analyze() function in web/index.html. No black box.
+> ✏️ The model name is editable — use any model your account can access.
 
-<details> <summary><b>📏 Thresholds and formulas</b> (click to expand)</summary>
-Finding	Rule
-Root-cause chain	A stockout links to a delivery of the same product that arrived 2 or more days late and landed from 2 days before to 3 days after the stockout ended. Linked stockouts are grouped by supplier. Lost profit = days out × average daily demand × margin.
-Stockout	A stockout with no late delivery to explain it.
-Stockout risk	Days of cover (stock / recent daily demand) is below the supplier's real typical delivery time.
-Dead stock	More than 90 days of cover. Cash locked = units above 60 days of demand × unit cost.
-Return spike	30+ units sold, 5+ returned, and a return rate at least 2× the shop average and 4 points above it. Cost is estimated at 35% of unit price per excess return.
-Price creep	3+ orders with a unit cost, and the latest cost is 8%+ above the first.
-Late payers	Overdue invoices with average lateness of 7+ days, or oldest overdue of 15+ days, or an average of 14+ days across 3+ paid invoices.
-Severity	High at max(₹25,000, 1.2% of revenue). Medium at max(₹8,000, 0.4% of revenue).
-</details> ```
+> [!WARNING]
+> **Security.** The key is stored in your browser's `localStorage` and sent only to the provider you pick. That is fine for local use and demos. For a public deployment, **do not ship a key to the browser**. Put a small Lambda function in front of the model and keep the key server-side (see the [roadmap](#-roadmap)).
+
+---
+
+## 📐 The Detection Rules
+
+Everything lives in the `analyze()` function in `web/index.html`. **No black box.**
+
+<details>
+<summary><b>📏 Thresholds and formulas</b> (click to expand)</summary>
+
+<br/>
+
+| Finding | Rule |
+| --- | --- |
+| **Root-cause chain** | A stockout links to a delivery of the same product that arrived **2 or more days late** and landed from 2 days before to 3 days after the stockout ended. Linked stockouts are grouped by supplier. Lost profit = `days out × average daily demand × margin`. |
+| **Stockout** | A stockout with no late delivery to explain it. |
+| **Stockout risk** | Days of cover (`stock / recent daily demand`) is below the supplier's real typical delivery time. |
+| **Dead stock** | More than **90 days** of cover. Cash locked = units above 60 days of demand × unit cost. |
+| **Return spike** | 30+ units sold, 5+ returned, and a return rate at least **2×** the shop average and 4 points above it. Cost is estimated at **35%** of unit price per excess return. |
+| **Price creep** | 3+ orders with a unit cost, and the latest cost is **8%+** above the first. |
+| **Late payers** | Overdue invoices with average lateness of 7+ days, or oldest overdue of 15+ days, or an average of 14+ days across 3+ paid invoices. |
+| **Severity** | **High** at `max(₹25,000, 1.2% of revenue)`. **Medium** at `max(₹8,000, 0.4% of revenue)`. |
+
+</details>
 
 ---
 
@@ -183,23 +284,55 @@ flowchart LR
     classDef app fill:#10233d,stroke:#0a84ff,color:#ffffff
     class CF,S3 aws
     class U,APP,LS,LLM app
+```
 
-📤 Push to GitHub
+### 🔵 Next (planned) — move the engine and the model behind serverless AWS services
+
+```mermaid
+flowchart TB
+    U["👤 Owner"] --> CF["CloudFront + S3<br/>static app"]
+    U --> COG["Cognito<br/>sign-in"]
+    U --> API["API Gateway"]
+    API --> L["Lambda<br/>analysis + chat proxy"]
+    L --> DDB[("DynamoDB<br/>records + findings")]
+    L --> OS[("OpenSearch Serverless<br/>history retrieval")]
+    L --> BR["Bedrock / Strands agent<br/>investigation + chat"]
+    UP["S3 uploads<br/>CSVs, invoices"] --> EB["EventBridge<br/>re-run on new data"] --> L
+
+    classDef aws fill:#3a2604,stroke:#ff9900,color:#ffffff
+    class CF,COG,API,L,DDB,OS,BR,UP,EB aws
+```
+
+> 🧩 `web/index.html` keeps the **engine** and the **UI** in two separate script blocks, so the engine can move into a Lambda function unchanged.
+> 
+
+---
+
+## 📤 Push to GitHub
+
 From inside the project folder:
 
-bash
+```bash
 git init -b main
 git add .
 git commit -m "Sentinel: silent loss detection for small businesses"
 git remote add origin https://github.com/dhruvareddy20066-commits/Sentinell.git
 git push -u origin main
-<details> <summary><b>🛠️ If something goes wrong</b> (click to expand)</summary>
-Message	Fix
-Author identity unknown	git config --global user.name "Your Name" and git config --global user.email "you@example.com", then commit again
-remote origin already exists	git remote set-url origin https://github.com/dhruvareddy20066-commits/Sentinell.git
-rejected or fetch first	git pull origin main --allow-unrelated-histories, then push again
-Asks for a password	Paste a personal access token (GitHub → Settings → Developer settings)
-</details> ```
+```
+
+<details>
+<summary><b>🛠️ If something goes wrong</b> (click to expand)</summary>
+
+<br/>
+
+| Message | Fix |
+| --- | --- |
+| `Author identity unknown` | `git config --global user.name "Your Name"` and `git config --global user.email "you@example.com"`, then commit again |
+| `remote origin already exists` | `git remote set-url origin https://github.com/dhruvareddy20066-commits/Sentinell.git` |
+| `rejected` or `fetch first` | `git pull origin main --allow-unrelated-histories`, then push again |
+| Asks for a password | Paste a **personal access token** (GitHub → Settings → Developer settings) |
+
+</details>
 
 ---
 
@@ -217,53 +350,66 @@ Pick one — both give you a public HTTPS URL.
 
 ```mermaid
 flowchart LR
-    A["1️⃣ Push to GitHub"] --> B["2️⃣ Amplify console<br/>Create new app, GitHub"] --> C["3️⃣ Pick repo<br/>+ main branch"] --> D["4️⃣ Save and deploy"] --> E["✅ Live URL<br/>amplifyapp.com"] 
+    A["1️⃣ Push to GitHub"] --> B["2️⃣ Amplify console<br/>Create new app, GitHub"] --> C["3️⃣ Pick repo<br/>+ main branch"] --> D["4️⃣ Save and deploy"] --> E["✅ Live URL<br/>amplifyapp.com"]
+```
 
- Push the repo to GitHub (above).
+1. **Push the repo to GitHub** *(above).*
+2. In the AWS console open **AWS Amplify** → **Create new app** → **GitHub** → authorise access.
+3. Select the `Sentinell` repository and the `main` branch. Amplify reads `amplify.yml` and serves the `web/` folder.
+4. Click **Save and deploy**. Every push to `main` redeploys automatically.
 
-In the AWS console open AWS Amplify → Create new app → GitHub → authorise access.
+### 🅱️ Option B — S3 + CloudFront
 
-Select the Sentinell repository and the main branch. Amplify reads amplify.yml and serves the web/ folder.
+Creates a **private** S3 bucket served through CloudFront over HTTPS with Origin Access Control.
 
-Click Save and deploy. Every push to main redeploys automatically.
-
-🅱️ Option B — S3 + CloudFront
-Creates a private S3 bucket served through CloudFront over HTTPS with Origin Access Control.
-
-bash
+```bash
 aws configure                              # once: paste your access key, region ap-south-1
 ./scripts/deploy.sh                        # stack "sentinel" in ap-south-1 (Mumbai)
 ./scripts/deploy.sh my-stack us-east-1     # custom stack name and region
-The script deploys infra/template.yaml, uploads web/, clears the CloudFront cache and prints your live URL.
-Run it again after any change. The first rollout can take a few minutes.
+```
 
-<details> <summary><b>🤖 Optional: auto-deploy on every push with GitHub Actions</b> (click to expand)</summary>
-.github/workflows/deploy.yml runs scripts/deploy.sh on pushes to main, using OIDC so no long-lived AWS keys live in GitHub.
+The script deploys `infra/template.yaml`, uploads `web/`, clears the CloudFront cache and prints your live URL.  
+Run it again after any change. *The first rollout can take a few minutes.*
 
-In AWS IAM, create an OIDC identity provider for token.actions.githubusercontent.com and a role GitHub Actions can assume, scoped to your repo.
+<details>
+<summary><b>🤖 Optional: auto-deploy on every push with GitHub Actions</b> (click to expand)</summary>
 
-Give the role permissions for CloudFormation, S3 and CloudFront.
+<br/>
 
-In GitHub, add the repository secret AWS_ROLE_ARN (and optionally the variable AWS_REGION).
+`.github/workflows/deploy.yml` runs `scripts/deploy.sh` on pushes to `main`, using **OIDC** so no long-lived AWS keys live in GitHub.
 
-💡 Using Amplify? Delete this workflow.
+1. In AWS IAM, create an OIDC identity provider for `token.actions.githubusercontent.com` and a role GitHub Actions can assume, scoped to your repo.
+2. Give the role permissions for **CloudFormation**, **S3** and **CloudFront**.
+3. In GitHub, add the repository secret `AWS_ROLE_ARN` *(and optionally the variable `AWS_REGION`)*.
+
+> 💡 *Using Amplify? Delete this workflow.*
 
 </details>
-🧹 To remove everything (Option B): empty the bucket, then run
-aws cloudformation delete-stack --stack-name sentinel
 
-💰 Cost: static hosting on S3 and CloudFront costs a few cents a month at demo traffic and is covered by the AWS Free Tier at low volume. The assistant is billed by whichever model provider you connect.
+---
 
-🗺️ Roadmap
-Step	What	AWS service
-1	Chat proxy so no API key reaches the browser	Lambda + Bedrock
-2	Move analyze() server-side and store records	Lambda + DynamoDB
-3	Upload CSVs and invoices, re-run analysis on arrival	S3 + EventBridge
-4	Sign-in and per-shop access	Cognito
-5	An agent that calls the detectors as tools	Strands agent on Bedrock
+> 🧹 **To remove everything (Option B):** empty the bucket, then run  
+> `aws cloudformation delete-stack --stack-name sentinel`
 
-📁 Project Structure
-text
+> 💰 **Cost:** static hosting on S3 and CloudFront costs a few cents a month at demo traffic and is covered by the AWS Free Tier at low volume. The assistant is billed by whichever model provider you connect.
+
+---
+
+## 🗺️ Roadmap
+
+| Step | What | AWS service |
+| :---: | --- | --- |
+| **1** | Chat proxy so no API key reaches the browser | Lambda + Bedrock |
+| **2** | Move `analyze()` server-side and store records | Lambda + DynamoDB |
+| **3** | Upload CSVs and invoices, re-run analysis on arrival | S3 + EventBridge |
+| **4** | Sign-in and per-shop access | Cognito |
+| **5** | An agent that calls the detectors as tools | Strands agent on Bedrock |
+
+---
+
+## 📁 Project Structure
+
+```text
 Sentinell/
 ├── web/
 │   └── index.html            the whole app (HTML, CSS and JS, one file)
@@ -279,23 +425,28 @@ Sentinell/
 ├── amplify.yml               Amplify Hosting build settings
 ├── LICENSE
 └── README.md
+```
 
-🧰 Tech Stack
-Layer	Choice
-App	Vanilla HTML, CSS and JavaScript — no framework, no dependencies, no build step
-Design	Liquid-glass UI with backdrop-filter, View Transitions API for the theme reveal, IntersectionObserver reveals, SVG charts, prefers-reduced-motion respected
-Storage	Browser localStorage with JSON export and import
-AI	Streaming (SSE) to Claude, OpenAI-compatible APIs and Gemini
-Hosting	AWS Amplify Hosting, or S3 + CloudFront via CloudFormation
+---
 
-⚠️ Limitations
-💾 Data lives in the browser's localStorage on one device. Use Export for backups.
+## 🧰 Tech Stack
 
-🧪 The demo data is synthetic and regenerated relative to today's date when you reset it.
+| Layer | Choice |
+| --- | --- |
+| **App** | Vanilla HTML, CSS and JavaScript — no framework, no dependencies, no build step |
+| **Design** | Liquid-glass UI with `backdrop-filter`, View Transitions API for the theme reveal, `IntersectionObserver` reveals, SVG charts, `prefers-reduced-motion` respected |
+| **Storage** | Browser `localStorage` with JSON export and import |
+| **AI** | Streaming (SSE) to Claude, OpenAI-compatible APIs and Gemini |
+| **Hosting** | AWS Amplify Hosting, or S3 + CloudFront via CloudFormation |
 
-📐 Findings are estimates. Lost profit uses average daily demand on in-stock days, and return cost uses a fixed 35% assumption.
+---
 
-🌐 Some model providers block direct browser calls (CORS). If the assistant shows a network error, use a provider that allows it or a backend proxy.
+## ⚠️ Limitations
+
+- 💾 Data lives in the browser's `localStorage` on one device. Use **Export** for backups.
+- 🧪 The demo data is **synthetic** and regenerated relative to today's date when you reset it.
+- 📐 Findings are **estimates**. Lost profit uses average daily demand on in-stock days, and return cost uses a fixed 35% assumption.
+- 🌐 Some model providers block direct browser calls (CORS). If the assistant shows a network error, use a provider that allows it or a backend proxy.
 
 ---
 
@@ -329,5 +480,3 @@ Released under the [MIT License](LICENSE)
 
 </div>
 
-
-    
